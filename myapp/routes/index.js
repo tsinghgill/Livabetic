@@ -10,4 +10,8 @@ router.get('/login', function(req, res, next) {
 	res.render('login', { title: 'Livabetic' });
 });
 
+router.get('/signup', function(req, res, next) {
+	res.render('signup', { title: 'Livabetic'})
+})
+
 module.exports = router;
