@@ -1,3 +1,4 @@
+var models = require('../models/database')
 var express = require('express');
 var router = express.Router();
 
