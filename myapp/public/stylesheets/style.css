@@ -13,7 +13,7 @@ body {
 h1.top-message{
 	top: 100%;
 	text-align: center;
-	background: rgba(66, 66, 66, .9);;
+	background: rgba(0, 0, 0, .6);
 	padding: 15px; 
 	/*top: */
 	font-family: 'Lato';
@@ -22,15 +22,10 @@ h1.top-message{
 	color: white;
 }
 
-/*#login-form
-{
-  position: relative;
-	width: 50%;
-  display: table;
-  border-radius: 4px;
-  vertical-align: ;
-}
-*/
+/*#login-form {
+	background: rgba(66, 66, 66, .9);
+}*/
+
 
 .form {
 	position: relative;
