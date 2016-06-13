@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// Routes may be different for users (ie, when use is signed in vs when they are not)
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
