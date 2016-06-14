@@ -4,30 +4,38 @@
 // Thus connection is a module.exports in database.js, being req here!
 
 var Sequelize = require('sequelize');
+var Log = require('./log');
 var connection = require('./database').connection
 var bcrypt = require('bcrypt-nodejs');
 var chalk = require('chalk');
 
 var User = connection.define('user', {
-			first_name: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			last_name: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			email: {
-				type: Sequelize.STRING,
-				isEmail: true,
-				unique: true,
-				allowNull: false
-			},
-			password: {
-				type: Sequelize.STRING,
-				allowNull: false
-			}
-		});
+	
+	first_name: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
+	last_name: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
+	email: {
+		type: Sequelize.STRING,
+		isEmail: true,
+		unique: true,
+		allowNull: false
+	},
+	password: {
+		type: Sequelize.STRING,
+		allowNull: false
+	}
+},
+{
+	underscored:true
+});
+
+// User.hasMany(Log)
+// User.hasOne(Logbook, {foreignKeyConstraint: true, foreignKey: 'logbook_id'});
 
 User.generateHash = function(password) {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -41,6 +49,4 @@ User.validPassword = function(password1, password2) {
 	return x
 };
 
-module.exports = {
-	user: User
-}
+module.exports = User;
