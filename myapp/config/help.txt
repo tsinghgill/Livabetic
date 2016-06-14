@@ -1,0 +1,5 @@
+you should put password configuration files here and database model configuration file,
+
+then you call it fron app.js,
+
+that way its only run once and all the configuration is done!

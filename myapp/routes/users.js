@@ -1,3 +1,7 @@
+// ==================================
+// FOR NOW ALL ROUTES ARE IN INDEX.JS
+// ==================================
+
 var express = require('express');
 var router = express.Router();
 

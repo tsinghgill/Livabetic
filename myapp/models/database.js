@@ -1,3 +1,7 @@
+// =====================================================
+// LATER THIS FILE WILL BE MOVED TO CONFIGURATION FOLDER
+// =====================================================
+
 var Sequelize = require('sequelize');
 
 var connection = new Sequelize('livabetic', 'tanny', 'tatti123', {
