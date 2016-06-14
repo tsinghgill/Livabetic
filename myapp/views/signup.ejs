@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>Signup</h1>
-    <form action="/signup" method="POST" id='signup-form'>
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body id="signup-page">
+<h1 class='top-message'>REGISTER NOW AND START CONTROLLING YOUR DIABETES!</h1>
+  <div class="form">
+    <form action="/signup" method="POST" id='login-form'>
     	<input type="text" name="first_name" placeholder="Firstname">
       <input type="text" name="last_name" placeholder="Lastname">
       <input type="text" name="email" placeholder="Email">
-    	<input type="text" name="password" placeholder="Password">
+      <input type="text" name="password" placeholder="Password">
       <!-- <input type="text" name="confirm_password" placeholder="Confirm Password"> -->
-    	<button type="submit">Signup</button>
+      <button type="submit">Signup</button>
     </form>
-  </body>
+  </div>
+</body>
 </html>
