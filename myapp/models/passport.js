@@ -28,33 +28,29 @@ module.exports = function(passport) {
 		// this nexttick thing is saying to fire the code below it
 		process.nextTick(function() {
 			// findOne is saying find a user whose email is the same as the forms email, this checks to see if the user trying to signup already exists
-			User.findOne({ where: { email: email }}).then(function(err, user) {
-				if(err) {
-					return done(err);
-				} else if(user) {
+			User.findOne({ where: { email: email }})
+			.then(function(data) {
+				if(data) {
 					return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-				} else {
-					var user_params = {
-						first_name: req.body.first_name,
-						last_name: req.body.last_name,
-						email: email,
-						password: User.generateHash(password)
-					}
-					User.create(user_params).then(function(user) {
-						return done(null, user);
-					});
-					// console.log('fewewfweffwe')
-					// var newUser = new User();
-
-					// newUser.email = email;
-					// newUser.password = newUser.generateHash(password); // THIS GENERATE HASH FUNCTION NEEDS TO BE IMPORTED SOME HOW, RECALL IT WAS GIVING US AN ERROR
-
-					// newUser.save(function(err) {
-					// 	if(err)
-					// 		throw err;
-					// return done(null, newUser);
-					// });
 				}
+
+				var user_params = {
+					first_name: req.body.first_name,
+					last_name: req.body.last_name,
+					email: email,
+					password: User.generateHash(password)
+				};
+
+				User.create(user_params)
+				.then(function(user) {
+					return done(null, user);
+				})
+				.catch(function(err) {
+					return done(err)
+				});
+			})
+			.catch(function(err) {
+				return done(err)
 			});
 		});
 	}));
@@ -65,19 +61,19 @@ module.exports = function(passport) {
 		passReqToCallback : true
 	},
 	function(req, email, password, done) {
-		// console.log(email)
-		User.findOne({ where: { email: email }}).then(function(err, user) {
-			// console.log('data', data);
-			if(err) {
-				// console.log(err.body);
-				return done(err);
-			} if(!user) {
+		User.findOne({ where: { email: email }})
+		.then(function(data) {
+			console.log(JSON.stringify(data, null, 4))
+			if(!data) {
 				return done(null, false, req.flash('loginMessage', 'No user found.'));
-			} else if (!user.validPassword(password)) {
+			} else if (!User.validPassword(password, data.password)) {
 				return done(null, false, req.flash('loginMessage', 'Wrong password.'));
 			} else {
-				return done(null, user);
+				return done(null, data);
 			}
+		})
+		.catch(function(err) {
+			return done(err)
 		})
 	}))
 };
