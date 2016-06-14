@@ -47,7 +47,7 @@ router.post('/signup', passport.authenticate('local-signup', {
 // });
 
 router.get('/dashboard', isLoggedIn, function(req, res) {
-	res.render('dashboard', { title: 'Livabetic', user: req.user })
+	res.render('dashboard')
 });
 
 router.get('/logout', function(req, res) {
