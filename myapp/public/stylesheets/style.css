@@ -7,7 +7,7 @@ font-family: 'Lato', sans-serif; */
 body {
 	padding: 50px;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-	background-image: url('http://4.bp.blogspot.com/-Pz5yFoEIA-g/VLQKunxV2hI/AAAAAAAABIk/X2zecvG0BVI/s1600/14%2B-%2B10(1).png');
+	background: rgba(66, 66, 66, .8);
 }
 
 h1.top-message{
@@ -17,20 +17,39 @@ h1.top-message{
 	padding: 15px; 
 	/*top: */
 	font-family: 'Lato';
-	font-size: 4em;
+	font-size: 3em;
 	font-weight: 700;
 	color: white;
 }
 
-/*#login-form {
-	background: rgba(66, 66, 66, .9);
-}*/
+body#home-page {
+	background-image: url('https://static.pexels.com/photos/3329/food-kitchen-cutting-board-cooking-large.jpg');
+	background-size: 1920px 1080px;
+}
 
+body#login-page {
+	background-image: url('http://4.bp.blogspot.com/-Pz5yFoEIA-g/VLQKunxV2hI/AAAAAAAABIk/X2zecvG0BVI/s1600/14%2B-%2B10(1).png');
+}
+
+body#signup-page {
+	background-image: url('https://4.bp.blogspot.com/-xLtggSLVA9g/VkrREs8tciI/AAAAAAAB4vg/G6wBCid2irU/s0/Healthy_Food_Healthy_Mind_wallpaper.jpg');
+	background-size: 100% 100%;
+}
+
+
+/*body#login-page::after {
+	opacity: 0.5;
+	top:0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+}*/
 
 .form {
 	position: relative;
 	z-index: 1;
-	background: #FFFFFF;
+	background: rgba(0, 0, 20, .5);
 	max-width: 360px;
 	margin: 0 auto 100px;
 	padding: 45px;
