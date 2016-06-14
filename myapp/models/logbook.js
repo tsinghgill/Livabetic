@@ -11,15 +11,18 @@ var Logbook = connection.define('logbook', {
 	},
 	bg_reading: {
 		type: Sequelize.FLOAT
-		// isEmail: true,
-		// unique: true,
-		// allowNull: false
 	},
 	bwz_estimate: {
 		type: Sequelize.FLOAT
 	},
 	bwz_carb_input: {
 		type: Sequelize.INTEGER
+	},
+	bwz_sensitivity: {
+		type: Sequelize.FLOAT 
+	},
+	bwz_correction: {
+		type: Sequelize.FLOAT 
 	},
 	daily_total: {
 		type: Sequelize.FLOAT
