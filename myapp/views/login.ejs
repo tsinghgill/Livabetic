@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>Login</h1>
-    <form id='login-form'>
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body id='login-page'>
+  <h1 class='top-message'>WELCOME BACK</h1>
+  <div class="form">
+    <form action="/login" method="POST" id='login-form'>
     	<input type="text" name="email" placeholder="Email">
-    	<input type="text" name="email" placeholder="Password">
-    	<input type="submit" value="Login">
+    	<input type="text" name="password" placeholder="Password">
+    	<button type="submit">Login</button>
     </form>
-  </body>
+  </div>
+</body>
 </html>

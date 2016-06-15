@@ -4,11 +4,21 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var flash = require('connect-flash');
+var session = require('express-session');
 
+// Routes may be different for users (ie, when use is signed in vs when they are not)
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+
+//var configDB = require('./models/database') - What happens if we dont add this in here????????? is it like doing node database.js to sync it????
+// also what do some fo the configurations do at the bottom?????????????????????????????????????????
+//THE PASSPORT CONFIGURATION SHOULD GO HERE AS SO:
+require('./models/passport')(passport)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +31,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// passport setup for user sessions
+app.use(session({
+    secret: 'settingUpUserLoginInformation',
+    resave: true,
+    saveUninitialized: true
+  }));
+app.use(passport.initialize());
+app.use(passport.session()); //helps make presistant login sessions
+app.use(flash()); //allows us to use connect-flash for flash messages that are stored in sessions
 
 app.use('/', routes);
 app.use('/users', users);
