@@ -1,4 +1,4 @@
-/* Require modules, models, etc. necessary for Log  */
+/* Require modules, models, etc. that are necessary for Log  */
 var User = require('./user');
 var Sequelize = require('sequelize');
 var connection = require('./database').connection;
