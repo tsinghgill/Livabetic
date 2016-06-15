@@ -1,7 +1,7 @@
+/* Require necessary modules, models, etc.. */
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('./user').user;
+var User = require('./user');
 var passport = require('passport')
-
 
 // UNDERSTAND HOW OTHER WAY OF EXPORTING WORKS
 module.exports = function(passport) {
@@ -16,7 +16,6 @@ module.exports = function(passport) {
 			done(null, user)
 		});
 	});
-
 
 	passport.use('local-signup', new LocalStrategy({
 		usernameField : 'email',

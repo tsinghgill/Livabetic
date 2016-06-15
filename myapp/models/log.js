@@ -1,4 +1,4 @@
-'use strict';
+/* Require modules, models, etc. necessary for Log  */
 var User = require('./user');
 var Sequelize = require('sequelize');
 var connection = require('./database').connection;
@@ -28,32 +28,13 @@ var Log = connection.define('log', {
 	daily_total: {
 		type: Sequelize.FLOAT
 	}
-
-
-	/* Set relation (hasMany) with users */
-// 	,
-// 	user_id: {
-// 		type: Sequelize.INTEGER,
-// 		allow_null: false,
-// 		references: {
-// 			model: 'user',
-// 			key: id
-// 		}
-// 	}
-// },{
-// 	tableName: 'logbooks',
-// 	underscored: true,
-// 	timestamps: false
 });
 
-// console.log(User);
+/* Commented out in case of debugging. */
+// console.log('>>>>>>>', 	User);
 
+/* Set relation (hasMany) with logs */
 User.hasMany(Log, {as: 'user'});
-// Log.belongsTo(User, {foreignKeyConstraint: true, foreignKey: 'user_id'});
-// Log.belongsTo(User, {as: 'user_id'});
 
-// Logbook.hasMany(User, {foreignKeyConstraint: true, foreignKey: 'user_id'});
-// this.User.has
-
-
+/* Export the Log object so that we can later push the parsed items into it */
 module.exports = Log;

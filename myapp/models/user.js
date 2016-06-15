@@ -3,14 +3,13 @@
 // know that we are establishing a connection with our database
 // Thus connection is a module.exports in database.js, being req here!
 
+/* Require necessary modules, models, etc.. */
 var Sequelize = require('sequelize');
-var Log = require('./log');
 var connection = require('./database').connection
 var bcrypt = require('bcrypt-nodejs');
 var chalk = require('chalk');
 
 var User = connection.define('user', {
-	
 	first_name: {
 		type: Sequelize.STRING,
 		allowNull: false
@@ -31,11 +30,9 @@ var User = connection.define('user', {
 	}
 },
 {
+	/* puts underscores model properties */
 	underscored:true
 });
-
-// User.hasMany(Log)
-// User.hasOne(Logbook, {foreignKeyConstraint: true, foreignKey: 'logbook_id'});
 
 User.generateHash = function(password) {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -49,4 +46,5 @@ User.validPassword = function(password1, password2) {
 	return x
 };
 
+/* Export this as an OBJECT, since there is no necessity to store it */
 module.exports = User;
