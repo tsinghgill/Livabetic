@@ -4,7 +4,7 @@
 
 var Sequelize = require('sequelize');
 
-var connection = new Sequelize('livabetic', 'tanny', 'tatti123', {
+var connection = new Sequelize('livabetic', 'dilraj', 'dilraj', {
 	host: 'localhost',
 	dialect: 'postgres',
 
