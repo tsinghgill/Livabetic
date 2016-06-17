@@ -1,7 +1,7 @@
 /* Require modules, models, etc. that are necessary for Log  */
 var User = require('./user');
 var Sequelize = require('sequelize');
-var connection = require('./database').connection;
+var connection = require('../config/database');
 
 var Log = connection.define('log', {
 	date: {

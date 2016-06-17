@@ -2,16 +2,29 @@
 // FOR NOW ALL ROUTES ARE HERE
 // ==================================
 
-var models = require('../models/database')
-var User = require('../models/user').user
+var models = require('../config/database');
+var User = require('../models/user');
 var express = require('express');
 var router = express.Router();
-var passport = require('passport')
+var passport = require('passport');
+var csv = require('fast-csv');
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/' })
+
 
 // ALL ROUTES
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Livabetic' })
 });
+
+router.post('/upload/data', upload.single('csvdata'), function(req, res, next) {
+	debugger;
+	
+	console.log(csv().from.path(req.file.path, {
+		delimiter: ",",
+		escape: '""'
+	}));
+})
 
 router.get('/login', function(req, res, next) {
 	res.render('login', { title: 'Livabetic', message: req.flash('loginMessage') }) // we will create the message in our passport.js file
