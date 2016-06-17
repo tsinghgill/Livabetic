@@ -31,10 +31,11 @@ router.post('/upload/data', upload, function(req, res) {
       // if (data['Daily Insulin Total (U)'] > 0) {
       //   console.log('------------------------------------------------------------------------------------------------');
       // }
+      // console.log(data);
 
       console.log(
       	/* For debugging::: verifying we have the right data*/
-      						// 'Index:', data['Index'], 
+      						'Index:', data['Index'], 
       						'Date:', data['Date'],
       						'Time:', data['Time'], 
       						'BG Reading (mmol/L):', data['BG Reading (mmol/L)'],
