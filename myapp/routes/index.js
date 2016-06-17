@@ -13,65 +13,61 @@ var passport = require('passport');
 var csv = require('fast-csv');
 var multer = require('multer');
 // var upload = multer({ dest: 'uploads/' }).single('csvdata')
-var upload = multer({ inMemory: true}).single('csvdata');
+var upload = multer({ inMemory: true }).single('csvdata');
 
 // ALL ROUTES
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Livabetic' })
+  res.render('index', { title: 'Livabetic' })
 });
 
 router.post('/upload/data', upload, function(req, res) {
-	// var sdfsd = 
-	debugger;
-	req.file.buffer.toString();
-	
+  csv.fromString(req.file.buffer.toString(), {headers : true })
+    .on("data", function(data){
+      console.log('.');
 
+      if (data['Daily Insulin Total (U)'] > 0) {
+        console.log('------------------------------------------------------------------------------------------------');
+      }
 
-	csv.fromStream(sdfsd, {headers : true })
-	.on("data", function(data){
-
-		if (data['Daily Insulin Total (U)'] > 0) {
-			console.log('------------------------------------------------------------------------------------------------');
-		}
-
-		// if (data['BWZ Insulin Sensitivity (mmol/L)'] > 0){ 
-			console.log('Index:', data['Index'], 'Date:', data['Date'], 
-				'Time:', 
-				data['Time'], 'BG Reading (mmol/L):',
-				data['BG Reading (mmol/L)'], 'BWZ Estimate (U):', 
-				data['BWZ Estimate (U)'], 'BWZ Carb Input (grams)', 
-				data['BWZ Carb Input (grams)'], 'Daily Insulin Total (U):', 
-				'BWZ Insulin Sensitivity (mmol/L):', data['BWZ Insulin Sensitivity (mmol/L)']); 
-		  // data['Daily Insulin Total (U)']);
-		// }
+      // if (data['BWZ Insulin Sensitivity (mmol/L)'] > 0){
+      console.log('Index:', data['Index'], 'Date:', data['Date'],
+                  'Time:',
+                  data['Time'], 'BG Reading (mmol/L):',
+                  data['BG Reading (mmol/L)'], 'BWZ Estimate (U):',
+                  data['BWZ Estimate (U)'], 'BWZ Carb Input (grams)',
+                  data['BWZ Carb Input (grams)'], 'Daily Insulin Total (U):',
+                  'BWZ Insulin Sensitivity (mmol/L):', data['BWZ Insulin Sensitivity (mmol/L)']);
+      // data['Daily Insulin Total (U)']);
+      // }
 	})
 	.on("end", function(){
-		console.log("[Completed]");
-		console.log(dilraj);
+      console.log("[Completed]");
+      // console.log(dilraj);
+      res.send("Yay!");
 	});
 
 });
 
 router.get('/login', function(req, res, next) {
-	res.render('login', { title: 'Livabetic', message: req.flash('loginMessage') }) // we will create the message in our passport.js file
+  res.render('login', { title: 'Livabetic', message: req.flash('loginMessage') }) // we will create the message in our passport.js file
 });
 
 router.post('/login', passport.authenticate('local-login', {
-	successRedirect : '/dashboard',
-	failureRedirect : '/',
-	failureFlash : true
+  successRedirect : '/dashboard',
+  failureRedirect : '/',
+  failureFlash : true
 }));
 
 router.get('/signup', function(req, res, next) {
-	res.render('signup', { title: 'Livabetic', message: req.flash('signupMessage') }) // we will create the message in our passport.js file
+  res.render('signup', { title: 'Livabetic', message: req.flash('signupMessage') }) // we will create the message in our passport.js file
 });
 
 router.post('/signup', passport.authenticate('local-signup', {
-	successRedirect : '/dashboard',
-	failureRedirect : '/',
-	failureFlash : true
+  successRedirect : '/dashboard',
+  failureRedirect : '/',
+  failureFlash : true
 })
-)
+           )
 
 // router.post('/signup', (req, res) => {
 // 	var user_params = {
@@ -86,12 +82,12 @@ router.post('/signup', passport.authenticate('local-signup', {
 // });
 
 router.get('/dashboard', isLoggedIn, function(req, res) {
-	res.render('dashboard')
+  res.render('dashboard')
 });
 
 router.get('/logout', function(req, res) {
-	res.logout(); //this logout() method is provided by passport and it handles logging out
-	res.redirect('/');
+  res.logout(); //this logout() method is provided by passport and it handles logging out
+  res.redirect('/');
 })
 
 // router.get('/dashboard', function(req, res) {
@@ -101,9 +97,9 @@ router.get('/logout', function(req, res) {
 // this is the middleware used to make sure a user is logged in, IE: when we are calling this above between our
 // path and callback function, this acts like middleware to check if user is authenticated already
 function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) // if user is authenticated in the session carry on and no need to resign them in
-		return next();
-	res.redirect('/'); // if they are not already logged in then we will redirect them to the homepage
+  if (req.isAuthenticated()) // if user is authenticated in the session carry on and no need to resign them in
+    return next();
+  res.redirect('/'); // if they are not already logged in then we will redirect them to the homepage
 }
 
 module.exports = router;
