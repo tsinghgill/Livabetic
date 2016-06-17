@@ -5,7 +5,7 @@
 
 /* Require necessary modules, models, etc.. */
 var Sequelize = require('sequelize');
-var connection = require('./database').connection
+var connection = require('../config/database');
 var bcrypt = require('bcrypt-nodejs');
 var chalk = require('chalk');
 

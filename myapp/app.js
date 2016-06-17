@@ -7,9 +7,10 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
+var multer = require('multer')
 
 // Routes may be different for users (ie, when use is signed in vs when they are not)
-var routes = require('./routes/index');
+var routes = require('./routes');
 var users = require('./routes/users');
 
 var app = express();
@@ -17,7 +18,7 @@ var app = express();
 //var configDB = require('./models/database') - What happens if we dont add this in here????????? is it like doing node database.js to sync it????
 // also what do some fo the configurations do at the bottom?????????????????????????????????????????
 //THE PASSPORT CONFIGURATION SHOULD GO HERE AS SO:
-require('./models/passport')(passport)
+require('./config/passport')(passport)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

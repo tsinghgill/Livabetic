@@ -9,5 +9,9 @@
     <p>Welcome to <%= title %></p>
     <button><a href="/login">Login</a></button>
     <button><a href="/signup">Signup</a></button>
+    <form id="upload-form" enctype="multipart/form-data" method="post" action="/upload/data">
+      <input type="file" name="csvdata" accept="text/csv">
+      <input type="submit" value="submit" id="submit">
+    </form>
   </body>
 </html>
