@@ -37,17 +37,15 @@ router.post('/upload/data', upload, function(req, res) {
       						// 'Index:', data['Index'], 
       						'Date:', data['Date'],
       						'Time:', data['Time'], 
-      						// 'BG Reading (mmol/L):', data['BG Reading (mmol/L)'],
-      						// 'BWZ Estimate (U):', data['BWZ Estimate (U)'],
-      						// 'BWZ Carb Input (grams)',data['BWZ Carb Input (grams)'],
-      						// 'BWZ Insulin Sensitivity (mmol/L):', data['BWZ Insulin Sensitivity (mmol/L)'],
+      						'BG Reading (mmol/L):', data['BG Reading (mmol/L)'],
+      						'BWZ Estimate (U):', data['BWZ Estimate (U)'],
+      						'BWZ Carb Input (grams)',data['BWZ Carb Input (grams)'],
+      						'BWZ Insulin Sensitivity (mmol/L):', data['BWZ Insulin Sensitivity (mmol/L)'],
       						'BWZ Correction Estimate (U):', data['BWZ Correction Estimate (U)'],
       						'Daily Insulin Total (U):', data['Daily Insulin Total (U)']
       						);
     })
 	.on("end", function(){
-		console.log("[Completed]");
-      // console.log(dilraj);
       res.send("Yay!");
     });
 
@@ -74,6 +72,7 @@ router.post('/signup', passport.authenticate('local-signup', {
 })
 )
 
+/* Unsure why this is commented out... */
 // router.post('/signup', (req, res) => {
 // 	var user_params = {
 // 		first_name: req.body.first_name,
@@ -95,16 +94,20 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 })
 
+/* Unsure why this is commented out... */
 // router.get('/dashboard', function(req, res) {
 // 	res.render('dashboard', { title: 'Livabetic' })
 // });
 
-// this is the middleware used to make sure a user is logged in, IE: when we are calling this above between our
-// path and callback function, this acts like middleware to check if user is authenticated already
+/* This is the middleware used to make sure a user is logged in, 
+IE: when we are calling this above between our
+path and callback function, this acts like middleware to check 
+if user is authenticated already */
+
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) // if user is authenticated in the session carry on and no need to resign them in
+  if (req.isAuthenticated()) /* if user is authenticated in the session carry on and no need to resign them in*/
   	return next();
-  res.redirect('/'); // if they are not already logged in then we will redirect them to the homepage
+  res.redirect('/'); /* if they are not already logged in then we will redirect them to the homepage*/
 }
 
 module.exports = router;
