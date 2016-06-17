@@ -2,6 +2,9 @@
 // FOR NOW ALL ROUTES ARE HERE
 // ==================================
 
+'use strict';
+
+/* Require necessary modules */
 var models = require('../config/database');
 var User = require('../models/user');
 var express = require('express');
@@ -9,22 +12,45 @@ var router = express.Router();
 var passport = require('passport');
 var csv = require('fast-csv');
 var multer = require('multer');
-var upload = multer({ dest: 'uploads/' })
-
+// var upload = multer({ dest: 'uploads/' }).single('csvdata')
+var upload = multer({ inMemory: true}).single('csvdata');
 
 // ALL ROUTES
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Livabetic' })
+	res.render('index', { title: 'Livabetic' })
 });
 
-router.post('/upload/data', upload.single('csvdata'), function(req, res, next) {
+router.post('/upload/data', upload, function(req, res) {
+	// var sdfsd = 
 	debugger;
+	req.file.buffer.toString();
 	
-	console.log(csv().from.path(req.file.path, {
-		delimiter: ",",
-		escape: '""'
-	}));
-})
+
+
+	csv.fromStream(sdfsd, {headers : true })
+	.on("data", function(data){
+
+		if (data['Daily Insulin Total (U)'] > 0) {
+			console.log('------------------------------------------------------------------------------------------------');
+		}
+
+		// if (data['BWZ Insulin Sensitivity (mmol/L)'] > 0){ 
+			console.log('Index:', data['Index'], 'Date:', data['Date'], 
+				'Time:', 
+				data['Time'], 'BG Reading (mmol/L):',
+				data['BG Reading (mmol/L)'], 'BWZ Estimate (U):', 
+				data['BWZ Estimate (U)'], 'BWZ Carb Input (grams)', 
+				data['BWZ Carb Input (grams)'], 'Daily Insulin Total (U):', 
+				'BWZ Insulin Sensitivity (mmol/L):', data['BWZ Insulin Sensitivity (mmol/L)']); 
+		  // data['Daily Insulin Total (U)']);
+		// }
+	})
+	.on("end", function(){
+		console.log("[Completed]");
+		console.log(dilraj);
+	});
+
+});
 
 router.get('/login', function(req, res, next) {
 	res.render('login', { title: 'Livabetic', message: req.flash('loginMessage') }) // we will create the message in our passport.js file
@@ -44,7 +70,7 @@ router.post('/signup', passport.authenticate('local-signup', {
 	successRedirect : '/dashboard',
 	failureRedirect : '/',
 	failureFlash : true
-	})
+})
 )
 
 // router.post('/signup', (req, res) => {
