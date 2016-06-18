@@ -6,12 +6,35 @@
 	<script src="http://d3js.org/d3.v3.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 </head>
-<body>
-	
-	<div id="chart"></div>
 
+<style>
+	body {
+	  font: 10px sans-serif;
+	}
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	.x.axis path {
+	  display: none;
+	}
+
+	.line {
+	  fill: none;
+	  stroke: steelblue;
+	  stroke-width: 1.5px;
+	}
+</style>
+<body>
+
+	<div id="chart"></div>
+	
 	<script>
-  
+  	'use strict';
 	  var file = "carelink.csv"
 
 
@@ -36,45 +59,56 @@
 	  		.range([MARGINS.left, WIDTH - MARGINS.right])
 	  		.domain([0, 31]);
 
+	  var xAxis = d3.svg.axis()
+	    .scale(xRange)
+	    .tickSize(5)
+	    .tickSubdivide(true);
+
+	  var yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient('left')
+      .tickSubdivide(true);
+
 	  var lineGraphicChart = function(csvFile) {
 	    d3.csv(csvFile, function(d) {
 	      return {
-	        day: moment(d['Date'], 'DD/MM/YY').day(),
-	        hour: d['Time'].split(':')[0],
+	        dayNumber: +d.Date.split("/")[0],
 	        value: +d['BG Reading (mmol/L)']
-	      }
+	      };
 	    },
 	    function(error, data) {
-
+	    	var line = svg.append("line")
+		    	.enter().append("rect")
+						.attr('x', function(d,i) {
+		            return d.dayNumber;
+		        })
+		        .attr('y', function(d) {
+		            return d.value;
+		        })
+	    // 	var line = d3.svg.line()
+	    // 		.x(function(d) { return x(d.dayNumber) })
+	    // 		.y(function(d) { return y(d.value) });
 	    });
 	  }
+
+		svg.append('svg:g')
+		  .attr('class', 'x axis')
+		  .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+		  .call(xAxis);
+
+		svg.append('svg:g')
+		  .attr('class', 'y axis')
+		  .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+		  .call(yAxis);
 
 	  lineGraphicChart(file);
 	  //   function(error, data) {
 
 	  // }
 	  
-	  // var xAxis = d3.svg.axis()
-	  //   .scale(xRange)
-	  //   .tickSize(5)
-	  //   .tickSubdivide(true);
-
-	  // var yAxis = d3.svg.axis()
-   //    .scale(yRange)
-   //    .tickSize(5)
-   //    .orient('left')
-   //    .tickSubdivide(true);
 
 
-		// svg.append('svg:g')
-		//   .attr('class', 'x axis')
-		//   .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-		//   .call(xAxis);
-
-		// svg.append('svg:g')
-		//   .attr('class', 'y axis')
-		//   .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-		//   .call(yAxis);
 
 		// };
 
