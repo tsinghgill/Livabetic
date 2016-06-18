@@ -1,137 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Line Graph</title>
-	<script src="http://d3js.org/d3.v3.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-</head>
+<html>
+<meta charset="utf-8">
+
+<!-- Example based on http://bl.ocks.org/mbostock/3887118 -->
+<!-- Tooltip example from http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html -->
 
 <style>
-	body {
-	  font: 10px sans-serif;
-	}
+body {
+  font: 11px sans-serif;
+}
 
-	.axis path,
-	.axis line {
-	  fill: none;
-	  stroke: #000;
-	  shape-rendering: crispEdges;
-	}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
 
-	.x.axis path {
-	  display: none;
-	}
+.dot {
+  stroke: #000;
+}
 
-	.line {
-	  fill: none;
-	  stroke: steelblue;
-	  stroke-width: 1.5px;
-	}
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
 </style>
 <body>
-
-	<div id="chart"></div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 
 	<script>
-  	'use strict';
-	  var file = "carelink.csv"
 
-
-		var MARGINS = { top: 50, right: 0, bottom: 100, left: 30 },
-			/* Initate Variables */
-		  WIDTH = 960 - MARGINS.left - MARGINS.right,
-		  HEIGHT = 500 - MARGINS.top - MARGINS.bottom;
-
-	  /* Initiate the X and Y's */
-	  var xRange = d3.time.scale()
-	  	.range([0, WIDTH]);
-
-	  var yRange = d3.scale.linear()
-	  	.range([HEIGHT, 0]);
-
-	  var color = ['#34495e', '#3498db', '#e74c3c'];
-
-	  var xAxis = d3.svg.axis()
-	    .scale(xRange)
-	    .orient('bottom')
-	    // .tickSize(5)
-	    // .tickSubdivide(true);
-
-	  var yAxis = d3.svg.axis()
-      .scale(yRange)
-      .orient('left')
-      // .tickSize(5)
-      // .tickSubdivide(true);
-
-    /* Set up the infrastructure  */
-		var svg = d3.select('#chart').append('svg')
-		  /* Attributes and appending group */
-		  .attr('width', WIDTH + MARGINS.left + MARGINS.right)
-		  .attr('height', HEIGHT + MARGINS.top + MARGINS.bottom)
-		  .style('background', 'pink')
-			.append('g')
-		  .attr('transform', 'translate(' + MARGINS.left + ',' + MARGINS.top + ')');
-
-	  var lineGraphicChart = function(csvFile) {
-	    d3.csv(csvFile, function(d) {
-	      return {
-	        dayNumber: +d.Date.split('/')[0],
-	        value: +d['BG Reading (mmol/L)']
-	      };
-	    },
-	    function(err, data) {
-
-	    	if (err) {
-	    		throw err;
-	    	}
-
-	    	xRange.domain(data.map(function(d){
-		    	// debugger; 
-	    		return d.dayNumber;
-	    	}));
-
-	    	yRange.domain([0, d3.max(data, function(d){
-	    		debugger;
-	    		return d.value;
-	    	})])
-
-
-	    	var line = svg.append('line')
-		    	.enter().append("rect")
-						.attr('x', function(d,i) {
-		            return d.dayNumber;
-		        })
-		        .attr('y', function(d) {
-		            return d.value;
-		        })
-	    // 	var line = d3.svg.line()
-	    // 		.x(function(d) { return x(d.dayNumber) })
-	    // 		.y(function(d) { return y(d.value) });
-	    });
-	  }
-
-		svg.append('svg:g')
-		  .attr('class', 'x axis')
-		  .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-		  .call(xAxis);
-
-		svg.append('svg:g')
-		  .attr('class', 'y axis')
-		  .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-		  .call(yAxis);
-
-	  lineGraphicChart(file);
-	  //   function(error, data) {
-
-	  // }
-	  
-
-
-
-		// };
-
-	
 	</script>
+	
 </body>
 </html>
