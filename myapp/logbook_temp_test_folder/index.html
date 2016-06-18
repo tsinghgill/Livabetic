@@ -43,6 +43,7 @@
 		  WIDTH = 960 - MARGINS.left - MARGINS.right,
 		  HEIGHT = 500 - MARGINS.top - MARGINS.bottom;
 
+	  /* Initiate the X and Y's */
 	  var xRange = d3.time.scale()
 	  	.range([0, WIDTH]);
 
@@ -53,33 +54,50 @@
 
 	  var xAxis = d3.svg.axis()
 	    .scale(xRange)
-	    .tickSize(5)
-	    .tickSubdivide(true);
+	    .orient('bottom')
+	    // .tickSize(5)
+	    // .tickSubdivide(true);
 
 	  var yAxis = d3.svg.axis()
       .scale(yRange)
-      .tickSize(5)
       .orient('left')
-      .tickSubdivide(true);
+      // .tickSize(5)
+      // .tickSubdivide(true);
 
-		var svg = d3.select("#chart").append("svg")
+    /* Set up the infrastructure  */
+		var svg = d3.select('#chart').append('svg')
 		  /* Attributes and appending group */
-		  .attr("width", WIDTH + MARGINS.left + MARGINS.right)
-		  .attr("height", HEIGHT + MARGINS.top + MARGINS.bottom)
+		  .attr('width', WIDTH + MARGINS.left + MARGINS.right)
+		  .attr('height', HEIGHT + MARGINS.top + MARGINS.bottom)
 		  .style('background', 'pink')
-		  .append("g")
-		  .attr("transform", "translate(" + MARGINS.left + "," + MARGINS.top + ")");
-
+			.append('g')
+		  .attr('transform', 'translate(' + MARGINS.left + ',' + MARGINS.top + ')');
 
 	  var lineGraphicChart = function(csvFile) {
 	    d3.csv(csvFile, function(d) {
 	      return {
-	        dayNumber: +d.Date.split("/")[0],
+	        dayNumber: +d.Date.split('/')[0],
 	        value: +d['BG Reading (mmol/L)']
 	      };
 	    },
-	    function(error, data) {
-	    	var line = svg.append("line")
+	    function(err, data) {
+
+	    	if (err) {
+	    		throw err;
+	    	}
+
+	    	xRange.domain(data.map(function(d){
+		    	// debugger; 
+	    		return d.dayNumber;
+	    	}));
+
+	    	yRange.domain([0, d3.max(data, function(d){
+	    		debugger;
+	    		return d.value;
+	    	})])
+
+
+	    	var line = svg.append('line')
 		    	.enter().append("rect")
 						.attr('x', function(d,i) {
 		            return d.dayNumber;
