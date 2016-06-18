@@ -32,7 +32,7 @@
 <body>
 
 	<div id="chart"></div>
-	
+
 	<script>
   	'use strict';
 	  var file = "carelink.csv"
@@ -41,23 +41,15 @@
 		var MARGINS = { top: 50, right: 0, bottom: 100, left: 30 },
 			/* Initate Variables */
 		  WIDTH = 960 - MARGINS.left - MARGINS.right,
-		  HEIGHT = 430 - MARGINS.top - MARGINS.bottom;
+		  HEIGHT = 500 - MARGINS.top - MARGINS.bottom;
 
-		var svg = d3.select("#chart").append("svg")
-		  /* Attributes and appending group */
-		  .attr("width", WIDTH + MARGINS.left + MARGINS.right)
-		  .attr("height", HEIGHT + MARGINS.top + MARGINS.bottom)
-		  .style('background', 'pink')
-		  .append("g")
-		  .attr("transform", "translate(" + MARGINS.left + "," + MARGINS.top + ")");
-	 
+	  var xRange = d3.time.scale()
+	  	.range([0, WIDTH]);
+
 	  var yRange = d3.scale.linear()
-		  .range([HEIGHT - MARGINS.top, MARGINS.bottom])
-		  .domain([0, 25]);
+	  	.range([HEIGHT, 0]);
 
-  	var xRange = d3.scale.linear()
-	  		.range([MARGINS.left, WIDTH - MARGINS.right])
-	  		.domain([0, 31]);
+	  var color = ['#34495e', '#3498db', '#e74c3c'];
 
 	  var xAxis = d3.svg.axis()
 	    .scale(xRange)
@@ -69,6 +61,15 @@
       .tickSize(5)
       .orient('left')
       .tickSubdivide(true);
+
+		var svg = d3.select("#chart").append("svg")
+		  /* Attributes and appending group */
+		  .attr("width", WIDTH + MARGINS.left + MARGINS.right)
+		  .attr("height", HEIGHT + MARGINS.top + MARGINS.bottom)
+		  .style('background', 'pink')
+		  .append("g")
+		  .attr("transform", "translate(" + MARGINS.left + "," + MARGINS.top + ")");
+
 
 	  var lineGraphicChart = function(csvFile) {
 	    d3.csv(csvFile, function(d) {
