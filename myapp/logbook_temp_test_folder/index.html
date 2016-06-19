@@ -17,8 +17,8 @@
         html, body, #test1, svg {
             margin: 0px;
             padding: 0px;
-            height: 100%;
-            width: 100%;
+            height: 500px;
+            width: 900px;
         }
     </style>
 </head>
@@ -29,73 +29,50 @@
 </div>
 
 <script>
-
-    var chart;
-    nv.addGraph(function() {
-        chart = nv.models.scatterChart()
-            .showDistX(true)
-            .showDistY(true)
-            .duration(300)
-            .color(d3.scale.category10().range());
-
-        chart.dispatch.on('renderEnd', function(){
-            console.log('render complete');
-        });
-
-        chart.xAxis.tickFormat(d3.format('.02f'));
-        chart.yAxis.tickFormat(d3.format('.02f'));
-
-        d3.select('#test1 svg')
-            .datum(nv.log(randomData(4,40)))
-            .datum(getBloodSugar())
-            .call(chart);
-
-        nv.utils.windowResize(chart.update);
-        chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
-        return chart;
-    });
-
-    function randomData(groups, points) { //# groups,# points per group
-        var data = [],
-            shapes = ['circle'],
-            random = d3.random.normal();
-
-        for (i = 0; i < groups; i++) {
-            data.push({
-                key: 'Group ' + i,
-                values: [],
-                slope: Math.random() - .01,
-                intercept: Math.random() - .5
-            });
-
-            for (j = 0; j < points; j++) {
-                data[i].values.push({
-                    x: random(),
-                    y: random(),
-                    size: Math.random(),
-                    shape: shapes[j % shapes.length]
-                });
-            }
-        }
-        return data;
-    }
-
-    function getBloodSugar(){
+    d3.csv("carelink.csv", function(error, data) {
         var myData = [
             {
-                key: "Blood Sugar",
+                key: "Carbs",
                 values: []
             }
         ];
-        d3.csv("carelink.csv", function(error, data) {
-            data.forEach(function(d) { 
-                carbs.push(+d['BWZ Carb Input (grams)']);
-                // d.Date = new Date(moment(d.Date, 'DD/MM/YY').format('YYYY-MM-DD'));
+        data.forEach(function(d) { 
+            // console.log(d['BWZ Carb Input (grams)'])
+            d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
+            myData[0].values.push(d);
+
+            // d.Date = new Date(moment(d.Date, 'DD/MM/YY').format('YYYY-MM-DD'));
+        });          
+        
+        var chart;
+        nv.addGraph(function() {
+            chart = nv.models.scatterChart()
+                .showDistX(true)
+                .showDistY(true)
+                .duration(300)
+                .color(d3.scale.category10().range())
+                .x(function (d) { return d.Date })
+                .y(function (d) { return d['BWZ Carb Input (grams)'] });
+
+            chart.dispatch.on('renderEnd', function(){
+                console.log('render complete');
             });
 
-          
-      });
-    }
+            chart.xAxis.tickFormat(d3.format('.02f'));
+            // chart.yAxis.tickFormat(d3.format(''));
+
+
+            d3.select('#test1 svg')
+                // .datum(nv.log(randomData(4,40)))
+                .datum(myData)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+            chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+            return chart;
+        });
+
+    });
 
 </script>
 </body>
