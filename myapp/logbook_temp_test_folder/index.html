@@ -6,6 +6,8 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.3/nv.d3.min.js'></script>
   <link href='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css' rel='stylesheet'>
   <script src="http://nvd3.org/assets/js/data/stream_layers.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+
 
   <style>
     text {
@@ -27,21 +29,30 @@
   <div id="test1" class="chartWrap">
     <svg></svg>
   </div>
-
+  
   <script>
+    'use strict';
     d3.csv("carelink.csv", function(error, data) {
       var myData = [
-      {
-        key: "Carbs",
-        values: []
-      }
+        {
+          key: "Blood Sugar",
+          values: []
+        }
       ];
       
       data.forEach(function(d) { 
         // console.log(d['BWZ Carb Input (grams)'])
-        d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
-        myData[0].values.push(d);
-        // d.Date = new Date(moment(d.Date, 'DD/MM/YY').format('YYYY-MM-DD'));
+        // d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
+        debugger;
+        myData[0].values = data.map(function(d){
+          // debugger;
+          d.Time = moment(d.Time, 'HH:mm:ss').hours();
+          // d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
+          if (d['BG Reading (mmol/L)'].length > 0){
+            d['BG Reading (mmol/L)'] = parseFloat(d['BG Reading (mmol/L)']);
+          }
+          return d;
+        })
       });          
 
       var chart;
@@ -51,18 +62,30 @@
           .showDistY(true)
           .duration(300)
           .color(d3.scale.category10().range())
-          .x(function (d) { return d.Date })
-          .y(function (d) { return d['BWZ Carb Input (grams)'] });
+          .x(function (d) { return d.Time })
+          .y(function (d) { 
+            return d['BG Reading (mmol/L)'] 
+          });
+
+        chart.dispatch.on('renderEnd', function(){
+          console.log('render complete');
+        });
+
+        var mintime = new Date('00:00:00');
+        var maxtime = new Date('23:59:59');
+
+        var x = d3.time.scale()
+          .domain([mintime, maxtime]);
 
         chart.xAxis
-        .axisLabel('Date')
-        .rotateLabels(-45)
-        .tickFormat(d3.time.format("%H"));
-          // .tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
-          // chart.yAxis.tickFormat(d3.format(''));
+          .scale(x)
+          .axisLabel('Time')
+          .rotateLabels(-45)
+          // .tickFormat(d3.time.format("%H"));
+            // .tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
+            // chart.yAxis.tickFormat(d3.format(''));
 
         d3.select('#test1 svg')
-          // .datum(nv.log(randomData(4,40)))
           .datum(myData)
           .call(chart);
 
