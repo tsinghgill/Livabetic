@@ -1,124 +1,101 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8">
+<head>
+    <meta charset="utf-8">
 
-<!-- Example based on http://bl.ocks.org/mbostock/3887118 -->
-<!-- Tooltip example from http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.3/nv.d3.min.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css' rel='stylesheet'>
 
-<style>
-	body {
-		font: 11px sans-serif;
-	}
+    <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #test1, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class='with-3d-shadow with-transitions'>
 
-	.axis path,
-	.axis line {
-		fill: none;
-		stroke: #000;
-		shape-rendering: crispEdges;
-	}
+<div id="test1" class="chartWrap">
+    <svg></svg>
+</div>
 
-	.dot {
-		stroke: #000;
-	}
+<script>
 
-	.tooltip {
-		position: absolute;
-		width: 200px;
-		height: 28px;
-		pointer-events: none;
-	}
-</style>
-<body>
-	<script src="http://d3js.org/d3.v3.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    var chart;
+    nv.addGraph(function() {
+        chart = nv.models.scatterChart()
+            .showDistX(true)
+            .showDistY(true)
+            .duration(300)
+            .color(d3.scale.category10().range());
 
-	<script>
-	'use strict';
-		var margin = {top: 20, right: 20, bottom: 30, left: 40},
-			width = 960 - margin.left - margin.right,
-			height = 500 - margin.top - margin.bottom;
+        chart.dispatch.on('renderEnd', function(){
+            console.log('render complete');
+        });
 
-		/* Hard code the min/max date */
-		var mindate = new Date('2016-03-17');
-		var maxdate = new Date('2016-03-23');
+        chart.xAxis.tickFormat(d3.format('.02f'));
+        chart.yAxis.tickFormat(d3.format('.02f'));
 
-		var x = d3.time.scale()
-			.domain([mindate, maxdate])
-			.rangeRound([0, width - margin.left - margin.right]);
+        d3.select('#test1 svg')
+            .datum(nv.log(randomData(4,40)))
+            .datum(getBloodSugar())
+            .call(chart);
 
-		var y = d3.scale.linear()
-			.domain([0, 300])
-			.range([height, 0]);
-			// .range([height - margin.top - margin.bottom, 0]);
+        nv.utils.windowResize(chart.update);
+        chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+        return chart;
+    });
 
+    function randomData(groups, points) { //# groups,# points per group
+        var data = [],
+            shapes = ['circle'],
+            random = d3.random.normal();
 
-		var xAxis = d3.svg.axis()
-	    .scale(x)
-	    .orient('bottom')
-	    .ticks(d3.time.days, 1)
-	    .tickFormat(d3.time.format('%a %d'))
-	    .tickSize(0)
-	    .tickPadding(8);
+        for (i = 0; i < groups; i++) {
+            data.push({
+                key: 'Group ' + i,
+                values: [],
+                slope: Math.random() - .01,
+                intercept: Math.random() - .5
+            });
 
-		var yAxis = d3.svg.axis()
-	    .scale(y)
-	    .orient('left')
-	    .tickPadding(8);
+            for (j = 0; j < points; j++) {
+                data[i].values.push({
+                    x: random(),
+                    y: random(),
+                    size: Math.random(),
+                    shape: shapes[j % shapes.length]
+                });
+            }
+        }
+        return data;
+    }
 
-	/* 
-	 * value accessor - returns the value to encode for a given data object.
-	 * scale - maps value to a visual display encoding, such as a pixel position.
-	 * map function - maps from data value to display value
-	 * axis - sets up axis
-	 */ 
+    function getBloodSugar(){
+        var myData = [
+            {
+                key: "Blood Sugar",
+                values: []
+            }
+        ];
+        d3.csv("carelink.csv", function(error, data) {
+            data.forEach(function(d) { 
+                carbs.push(+d['BWZ Carb Input (grams)']);
+                // d.Date = new Date(moment(d.Date, 'DD/MM/YY').format('YYYY-MM-DD'));
+            });
 
-		/* Essentially the core of the graph */
-		var svg = d3.select("body").append("svg")
-			.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
-			.append("g")
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-		/* Load data from CSV */
-		d3.csv("carelink.csv", function(error, data) {
-		  data.forEach(function(d) { 
-		  	d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
-		  	d.Date = new Date(moment(d.Date, 'DD/MM/YY').format('YYYY-MM-DD'));
-		  });
-
-		  svg.append("g")
-			  .attr("class", "x axis")
-			  .attr("transform", "translate(0," + height + ")")
-			  .call(xAxis)
-			  .append("text")
-			  .attr("class", "label")
-			  .attr("x", width)
-			  .style("text-anchor", "end")
-			  .text("Date");
-
-		  // y-axis
-		  svg.append("g")
-			  .attr("class", "y axis")
-			  .call(yAxis)
-			  .append("text")
-			  .attr("class", "label")
-			  .attr("transform", "rotate(-90)")
-			  .attr("dy", ".71em")
-			  .style("text-anchor", "end")
-			  .text("Carb Intake");
-
-			// draw dots
-		  svg.selectAll(".dot")
-			  .data(data)
-		  .enter().append("circle")
-			  .attr("class", "dot")
-			  .attr("r", 3.5)
-			  .attr("cx", function(d) { return x(d.Date); })
-			  .attr("cy", function(d) { return x(d['BWZ Carb Input (grams)']); })
-			  .style("fill", function(d) { return color('pink');
-		});
-
-	});
+          
+      });
+    }
 
 </script>
 </body>

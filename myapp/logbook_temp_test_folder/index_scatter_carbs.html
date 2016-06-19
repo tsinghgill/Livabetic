@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<!-- Example based on http://bl.ocks.org/mbostock/3887118 -->
+<!-- Tooltip example from http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html -->
+
+<style>
+	body {
+		font: 11px sans-serif;
+	}
+
+	.axis path,
+	.axis line {
+		fill: none;
+		stroke: #000;
+		shape-rendering: crispEdges;
+	}
+
+	.dot {
+		stroke: #000;
+	}
+
+	.tooltip {
+		position: absolute;
+		width: 200px;
+		height: 28px;
+		pointer-events: none;
+	}
+</style>
+<body>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+
+	<script>
+	'use strict';
+		var margin = {top: 20, right: 20, bottom: 30, left: 40},
+			width = 960 - margin.left - margin.right,
+			height = 500 - margin.top - margin.bottom;
+
+		/* Hard code the min/max date */
+		var mindate = new Date('2016-03-17');
+		var maxdate = new Date('2016-03-23');
+
+		var x = d3.time.scale()
+			.domain([mindate, maxdate])
+			.rangeRound([0, width - margin.left - margin.right]);
+
+		var y = d3.scale.linear()
+			.domain([0, 300])
+			.range([height, 0]);
+			// .range([height - margin.top - margin.bottom, 0]);
+
+
+		var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient('bottom')
+	    .ticks(d3.time.days, 1)
+	    .tickFormat(d3.time.format('%a %d'))
+	    .tickSize(0)
+	    .tickPadding(8);
+
+		var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient('left')
+	    .tickPadding(8);
+
+	/* 
+	 * value accessor - returns the value to encode for a given data object.
+	 * scale - maps value to a visual display encoding, such as a pixel position.
+	 * map function - maps from data value to display value
+	 * axis - sets up axis
+	 */ 
+
+		/* Essentially the core of the graph */
+		var svg = d3.select("body").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		/* Load data from CSV */
+		d3.csv("carelink.csv", function(error, data) {
+		  data.forEach(function(d) { 
+		  	d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
+		  	d.Date = new Date(moment(d.Date, 'DD/MM/YY').format('YYYY-MM-DD'));
+		  });
+
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis)
+			  .append("text")
+			  .attr("class", "label")
+			  .attr("x", width)
+			  .style("text-anchor", "end")
+			  .text("Date");
+
+		  // y-axis
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis)
+			  .append("text")
+			  .attr("class", "label")
+			  .attr("transform", "rotate(-90)")
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Carb Intake");
+
+			// draw dots
+		  svg.selectAll(".dot")
+			  .data(data)
+		  .enter().append("circle")
+			  .attr("class", "dot")
+			  .attr("r", 3.5)
+			  .attr("cx", function(d) { return x(d.Date); })
+			  .attr("cy", function(d) { return y(d['BWZ Carb Input (grams)']); 
+			})
+
+			  .style("fill", function(d) { return color('pink');
+		});
+
+	});
+
+</script>
+</body>
+</html>
