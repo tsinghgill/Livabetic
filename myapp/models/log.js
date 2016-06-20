@@ -10,6 +10,9 @@ var Log = connection.define('log', {
 	date: {
 		type: Sequelize.DATE
 	},
+	timestamp: {
+		type: Sequelize.STRING
+	},
 	bg_reading: {
 		type: Sequelize.FLOAT
 	},

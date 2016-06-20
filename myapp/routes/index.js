@@ -41,12 +41,20 @@ router.post('/upload/data', upload, function(req, res) {
         return parseInt(value)
       }
     };
+    function dateCheck(value) {
+      if(moment(value, 'DD/MM/YY').format('DD/MM/YY')==value) {
+        return moment(value, 'DD/MM/YY').format('YYYY-MM-DD')
+      } else {
+        return moment(value, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      }
+    };
       Log
         .create({
             // date: moment(data['Date'], 'DD-MM-YY'),
             // time: data.Time,
             time: data.Time,
-            date: moment(data['Date'], 'DD/MM/YY').format('YYYY-MM-DD'),
+            date: dateCheck(data['Date']),
+            timestamp: data.Timestamp,
             bg_reading: parseCheckFloat(data['BG Reading (mmol/L)']),
             bwz_estimate: parseCheckFloat(data['BWZ Estimate (U)']),
             bwz_carb_input: parseCheckInt(data['BWZ Carb Input (grams)']),
@@ -63,8 +71,7 @@ router.post('/upload/data', upload, function(req, res) {
             }))
             console.log(created)
           })
-        })
-    
+        }) 
     })
 	.on("error", function(data) {
     return false;
