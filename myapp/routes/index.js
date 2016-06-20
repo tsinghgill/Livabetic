@@ -23,6 +23,15 @@ router.get('/', function(req, res, next) {
 	res.render('index', { title: 'Livabetic' })
 });
 
+router.get('/tatti', function(req, res) {
+  Log.findAll({
+    limit: 400
+  })
+  .then(function(data) {
+    res.send(data)
+  })
+});
+
 router.post('/upload/data', upload, function(req, res) {
 	csv.fromString(req.file.buffer.toString(), {headers : true })
 	.on("data", function(data){
