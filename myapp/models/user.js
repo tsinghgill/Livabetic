@@ -1,8 +1,3 @@
-// Here we have defined our users model
-// We are referencing connection from the database to let the program
-// know that we are establishing a connection with our database
-// Thus connection is a module.exports in database.js, being req here!
-
 /* Require necessary modules, models, etc.. */
 var Sequelize = require('sequelize');
 var connection = require('../config/database');

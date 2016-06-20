@@ -20,6 +20,7 @@
     "fast-csv": "^2.0.0",
     "fileupload": "^1.0.0",
     "fs": "0.0.2",
+    "moment": "^2.13.0",
     "morgan": "~1.6.1",
     "multer": "^1.1.0",
     "nodemon": "^1.9.2",
