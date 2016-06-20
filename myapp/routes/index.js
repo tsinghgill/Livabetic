@@ -110,13 +110,29 @@ router.post('/signup', passport.authenticate('local-signup', {
 // });
 
 router.get('/dashboard', isLoggedIn, function(req, res) {
-	res.render('dashboard')
+	res.render('dashboard', { title: 'Dashboard' })
+});
+
+router.get('/profile', isLoggedIn, function(req, res) {
+  res.render('profile', { title: 'Profile' })
+});
+
+router.get('/charts', isLoggedIn, function(req, res) {
+  res.render('charts', { title: 'Charts' })
+});
+
+router.get('/nutrition', isLoggedIn, function(req, res) {
+  res.render('nutrition', { title: 'Nutrition' })
+});
+
+router.get('/exercise', isLoggedIn, function(req, res) {
+  res.render('exercise', { title: 'Exercise' })
 });
 
 router.get('/logout', function(req, res) {
   res.logout(); //this logout() method is provided by passport and it handles logging out
   res.redirect('/');
-})
+});
 
 /* Unsure why this is commented out... */
 // router.get('/dashboard', function(req, res) {
