@@ -4,11 +4,14 @@ var Sequelize = require('sequelize');
 var connection = require('../config/database');
 
 var Log = connection.define('log', {
-	date: {
-		type: Sequelize.DATE,
-	},
 	time: {
-		type: Sequelize.TIME,
+		type: Sequelize.TIME
+	},
+	date: {
+		type: Sequelize.DATE
+	},
+	timestamp: {
+		type: Sequelize.STRING
 	},
 	bg_reading: {
 		type: Sequelize.FLOAT
