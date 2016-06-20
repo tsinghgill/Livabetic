@@ -1,3 +1,3 @@
-var remaining_values = require('./app.js').remaining_values;
+var data = require('./app.js').rv();
 
-console.log(remaining_values);
+console.log(data);

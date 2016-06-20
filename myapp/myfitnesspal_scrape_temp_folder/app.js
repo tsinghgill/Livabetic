@@ -38,7 +38,6 @@ request(url, function(err, res, body) {
 		return targetArray;
 	});
 
-
 	// function getNutritionalValues(row){
 	// 	console.log(row);
 	// 	row.find('.positive').each(function(){
@@ -48,7 +47,7 @@ request(url, function(err, res, body) {
 	// }
 	// console.log(remainingArray)
 
-	global.remaining_values = {
+	var remaining_values = {
 		remaining_calories: parseInt(remainingArray[0].replace(/,/g, '')),
 		remaining_carbs: parseInt(remainingArray[1].replace(/,/g, '')),
 		remaining_fat: parseInt(remainingArray[2].replace(/,/g, '')),
@@ -56,37 +55,43 @@ request(url, function(err, res, body) {
 		remaining_sodium: parseInt(remainingArray[4].replace(/,/g, ''))
 	};
 
-	// console.log(remaining_values);
-
-	global.target_values = {
+	var target_values = {
 		target_calories: parseInt(targetArray[1].replace(/,/g, '')),
 		target_carbs: parseInt(targetArray[2].replace(/,/g, '')),
 		target_fat: parseInt(targetArray[3].replace(/,/g, '')),
 		target_protein: parseInt(targetArray[4].replace(/,/g, '')),
 		target_sodium: parseInt(targetArray[5].replace(/,/g, ''))
 	};
-	// console.log(target_values);
+
+	// function rv(remaining_values){
+	// 	return remaining_values;
+	// };
+	// function tv(){
+	// 	return target_values;
+	// };
+	// module.exports = {rv}
 });
 
-// var MARGIN = { top: 50, right: 0, bottom: 100, left: 30 },
-//   /* Initate Variables */
-//   WIDTH = 960 - MARGIN.left - MARGIN.right,
-//   HEIGHT = 430 - MARGIN.top - MARGIN.bottom,
-//   RADIUS = Math.min(WIDTH, HEIGHT) / 2;
 
-// var color = d3.scale.category20();
+var MARGIN = { top: 50, right: 0, bottom: 100, left: 30 },
+  /* Initate Variables */
+  WIDTH = 960 - MARGIN.left - MARGIN.right,
+  HEIGHT = 430 - MARGIN.top - MARGIN.bottom,
+  RADIUS = Math.min(WIDTH, HEIGHT) / 2;
 
-// var pie = d3.layout.pie()
+var color = d3.scale.category20();
 
-// var svg = d3.select('#chart').append('svg')
-// 	.attr('width', WIDTH)
-// 	.attr('height', HEIGHT)
-// 	.attr("fill", "pink")
-// 	.append('g')
-// 	.attr('transform', 'translate(' + WIDTH/2 + ',' + HEIGHT/2 + ')');
+var pie = d3.layout.pie()
 
-// var data = target_values.map(function(d){
-// 	console.log(d);
-// })
+var svg = d3.select('#chart').append('svg')
+	.attr('width', WIDTH)
+	.attr('height', HEIGHT)
+	.attr("fill", "pink")
+	.append('g')
+	.attr('transform', 'translate(' + WIDTH/2 + ',' + HEIGHT/2 + ')');
+
+var data = target_values.map(function(d){
+	console.log(d);
+})
 
 
