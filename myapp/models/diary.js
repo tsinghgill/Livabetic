@@ -1,3 +1,4 @@
+var User = require('./user');
 var Sequelize = require('sequelize');
 var connection = require('../config/database');
 
@@ -17,14 +18,14 @@ var Diary = connection.define('diary', {
   sodium: {
     type: Sequelize.INTEGER
   },
-  suger: {
-    Sequelize.INTEGER
+  sugar: {
+    type: Sequelize.INTEGER
   },
   water: {
-    Sequelize.INTEGER
+    type: Sequelize.INTEGER
   }
 });
 
-User.hasMany(DiarySS, {as: 'user'});
+User.hasMany(Diary, {as: 'user'});
 
 module.exports = Diary;
