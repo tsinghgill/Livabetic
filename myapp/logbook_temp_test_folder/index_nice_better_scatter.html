@@ -46,6 +46,7 @@
         debugger;
         myData[0].values = data.map(function(d){
           // debugger;
+          d.Date = moment(d.Date, 'DD/MM/YY').format("MMM Do");
           d.Time = moment(d.Time, 'HH:mm:ss').hours();
           // d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
           if (d['BG Reading (mmol/L)'].length > 0){
@@ -62,10 +63,16 @@
           .showDistY(true)
           .duration(300)
           .color(d3.scale.category10().range())
-          .x(function (d) { return d.Time })
+          .x(function (d) { 
+            return d.Time //, d.Date            
+          })
           .y(function (d) { 
             return d['BG Reading (mmol/L)'] 
           });
+        
+        chart.tooltipContent(function(key) {
+            return '<h3>' + key + '</h3>';
+        });
 
         chart.dispatch.on('renderEnd', function(){
           console.log('render complete');
@@ -81,9 +88,13 @@
           .scale(x)
           .axisLabel('Time')
           .rotateLabels(-45)
-            // .tickFormat(d3.time.format("%H"));
-            // .tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
-            // chart.yAxis.tickFormat(d3.format(''));
+          // .tickFormat(d3.time.format("%H"));
+          // .tickFormat(function(d) { 
+          //   return d3.time.format('%b %d')(new Date(d))
+          // });
+        chart.x2Axis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+            
+        chart.yAxis.tickFormat(d3.format(''));
 
         d3.select('#test1 svg')
           .datum(myData)

@@ -25,7 +25,12 @@ router.get('/', function(req, res, next) {
 
 router.get('/tatti', function(req, res) {
   Log.findAll({
-    limit: 400
+    attributes: ['date', 'time', 'bg_reading'],
+    where: {
+      bg_reading: {gt: 0}
+    }
+    ,
+    // group: ['date']
   })
   .then(function(data) {
     res.send(data)
