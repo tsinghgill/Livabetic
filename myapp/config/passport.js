@@ -2,6 +2,8 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var passport = require('passport')
+var app = require('../app');
+// console.log('----- APP', app)
 
 // UNDERSTAND HOW OTHER WAY OF EXPORTING WORKS
 module.exports = function(passport) {
@@ -62,13 +64,18 @@ module.exports = function(passport) {
 	function(req, email, password, done) {
 		User.findOne({ where: { email: email }})
 		.then(function(data) {
-			console.log(JSON.stringify(data, null, 4))
+			// console.log(JSON.stringify(data, null, 4))
 			if(!data) {
 				return done(null, false, req.flash('loginMessage', 'No user found.'));
 			} else if (!User.validPassword(password, data.password)) {
 				return done(null, false, req.flash('loginMessage', 'Wrong password.'));
 			} else {
+				// console.log(JSON.stringify(app))
+				// app.set('user', data)
+				// req.session.user = user;
+				// console.log(req.session.user)
 				return done(null, data);
+
 			}
 		})
 		.catch(function(err) {

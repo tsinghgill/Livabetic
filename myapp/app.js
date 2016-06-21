@@ -13,7 +13,7 @@ var multer = require('multer')
 var routes = require('./routes');
 var users = require('./routes/users');
 
-var app = express();
+var app = module.exports = express();
 
 //var configDB = require('./models/database') - What happens if we dont add this in here????????? is it like doing node database.js to sync it????
 // also what do some fo the configurations do at the bottom?????????????????????????????????????????
@@ -76,5 +76,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
-module.exports = app;
+// console.log('----- APP', JSON.stringify(app))

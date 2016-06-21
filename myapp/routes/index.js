@@ -8,15 +8,16 @@
 var models = require('../config/database');
 var User = require('../models/user');
 var Log = require('../models/log');
+var Diary = require('../models/diary');
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var csv = require('fast-csv');
 var multer = require('multer');
-/* Commented out in case we need to store the data in a folder */
-// var upload = multer({ dest: 'uploads/' }).single('csvdata')
 var upload = multer({ inMemory: true }).single('csvdata');
 var moment = require('moment');
+var request = require('request');
+var cheerio = require('cheerio');
 
 /* All Routes */
 router.get('/', function(req, res, next) {
@@ -24,12 +25,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/tatti', function(req, res) {
-  Log.findAll({
-    where: {
-      bg_reading: {gt: 0}
-    },
-    attributes: ['date', 'time', 'bg_reading'],
-    group: 'date',
+  Diary.findAll({
+    limit: 2
   })
   .then(function(data) {
     res.send(data)
@@ -39,7 +36,6 @@ router.get('/tatti', function(req, res) {
 router.post('/upload/data', upload, function(req, res) {
 	csv.fromString(req.file.buffer.toString(), {headers : true })
 	.on("data", function(data){
-    debugger;
     function parseCheckFloat(value) {
       if(value === '') {
         return 0
@@ -63,8 +59,6 @@ router.post('/upload/data', upload, function(req, res) {
     };
       Log
         .create({
-            // date: moment(data['Date'], 'DD-MM-YY'),
-            // time: data.Time,
             time: data.Time,
             date: dateCheck(data['Date']),
             timestamp: data.Timestamp,
@@ -84,7 +78,7 @@ router.post('/upload/data', upload, function(req, res) {
             }))
             console.log(created)
           })
-        }) 
+        })
     })
 	.on("error", function(data) {
     return false;
@@ -116,21 +110,10 @@ router.post('/signup', passport.authenticate('local-signup', {
 })
 )
 
-/* Unsure why this is commented out... */
-// router.post('/signup', (req, res) => {
-// 	var user_params = {
-// 		first_name: req.body.first_name,
-// 		last_name: req.body.last_name,
-// 		email: req.body.email,
-// 		password: req.body.password
-// 	}
-// 	User.create(user_params).then(function() {
-// 		res.redirect('/dashboard')
-// 	});
-// });
-
 router.get('/dashboard', isLoggedIn, function(req, res) {
+  // console.log(req.params.user)
 	res.render('dashboard', { title: 'Dashboard' })
+  // console.log(app.get('user'))
 });
 
 router.get('/profile', isLoggedIn, function(req, res) {
@@ -149,20 +132,78 @@ router.get('/exercise', isLoggedIn, function(req, res) {
   res.render('exercise', { title: 'Exercise' })
 });
 
+router.get('/myfitnesspal', isLoggedIn, function(req, res) {
+  res.render('myfitnesspal', { title: 'myFitnessPal' })
+});
+
+router.post('/upload/myfitnesspal', function(req, res) {
+
+  // myFitnessPal Scrapper
+  var url = 'http://www.myfitnesspal.com/food/diary/dsomel21';
+
+  request(url, function(err, res, body) {
+    if (err) {
+      console.log(err);
+    }
+    
+    var $ = cheerio.load(body);
+
+    function isANumber(value) {
+      return value >= 0;
+    }
+
+    var finalArray = [];
+
+    var finalRow = $('.table0 tr.bottom');
+    finalRow.each(function(i, row){
+      $(this).find('td').each(function(){
+        finalArray.push(parseInt($(this).text()));
+      });
+      return finalArray.filter(isANumber);
+    });
+
+    var filteredArray = finalArray.filter(isANumber)
+
+    var calories = filteredArray[0]+filteredArray[6]+filteredArray[12]+filteredArray[18]
+    var carbs = filteredArray[1]+filteredArray[7]+filteredArray[13]+filteredArray[19]
+    var fat = filteredArray[2]+filteredArray[8]+filteredArray[14]+filteredArray[20]
+    var protein = filteredArray[3]+filteredArray[9]+filteredArray[15]+filteredArray[21]
+    var sodium = filteredArray[4]+filteredArray[10]+filteredArray[16]+filteredArray[22]
+    var sugar = filteredArray[5]+filteredArray[11]+filteredArray[17]+filteredArray[23]
+
+    Diary.create({
+      calories: calories,
+      carbs: carbs,
+      fat: fat,
+      protein: protein,
+      sodium: sodium,
+      sugar: sugar
+    })
+    .then(function() {
+      Diary
+    .findOrCreate({where: {sodium: sodium }})
+    .spread(function(diary, created) {
+      console.log(diary.get({
+        plain: true
+      }))
+      console.log(created)
+    })
+  })
+  })
+  .on("error", function(data) {
+    return false;
+  })
+  .on("end", function(){
+    res.send("Yay!");
+  });
+})
+
 router.get('/logout', function(req, res) {
   res.logout(); //this logout() method is provided by passport and it handles logging out
   res.redirect('/');
 });
 
-/* Unsure why this is commented out... */
-// router.get('/dashboard', function(req, res) {
-// 	res.render('dashboard', { title: 'Livabetic' })
-// });
 
-/* This is the middleware used to make sure a user is logged in, 
-IE: when we are calling this above between our
-path and callback function, this acts like middleware to check 
-if user is authenticated already */
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) /* if user is authenticated in the session carry on and no need to resign them in*/

@@ -2,15 +2,11 @@
 /* Import necessary modules */
 var request = require('request');
 var cheerio = require('cheerio');
+var Diary = require('../models/diary');
 
-/* Setup user and URL information --- HARDCODED FOR NOW */
-var remainingArray = [];
-var targetArray = [];
-
-// var username = 'dsomel21';
+// myFitnessPal Scrapper
 var url = 'http://www.myfitnesspal.com/food/diary/dsomel21';
 
-/* Fetch Data */
 request(url, function(err, res, body) {
 	if (err) {
 		console.log(err);
@@ -18,43 +14,38 @@ request(url, function(err, res, body) {
 	
 	var $ = cheerio.load(body);
 
-	/* Remaining Values */
-	var remainingRow = $('.table0 .total.remaining');
-	remainingRow.each(function(i, row) {
-		// getNutritionalValues($(this));
-		$(this).find('td.positive').each(function(){
-			remainingArray.push(parseInt($(this).text()));
-		});
-		return remainingArray;
-	});
+	function isANumber(value) {
+		return value >= 0;
+	}
 
-	/* Target Values*/
-	var totalRow = $('.table0 .total.alt');
-	totalRow.each(function(i, row){
+	var finalArray = [];
+
+	var finalRow = $('.table0 tr.bottom');
+	finalRow.each(function(i, row){
 		$(this).find('td').each(function(){
 			targetArray.push($(this).text());
+			finalArray.push(parseInt($(this).text()));
 		});
-		return targetArray;
+		return finalArray.filter(isANumber);
 	});
 
-	// var remaining_values = {
-	// 	remaining_calories: parseInt(remainingArray[0].replace(/,/g, '')),
-	// 	remaining_carbs: parseInt(remainingArray[1].replace(/,/g, '')),
-	// 	remaining_fat: parseInt(remainingArray[2].replace(/,/g, '')),
-	// 	remaining_protein: parseInt(remainingArray[3].replace(/,/g, '')),
-	// 	remaining_sodium: parseInt(remainingArray[4].replace(/,/g, ''))
-	// };
+	var filteredArray = finalArray.filter(isANumber)
 
-	// var target_values = {
-	// 	target_calories: parseInt(targetArray[1].replace(/,/g, '')),
-	// 	target_carbs: parseInt(targetArray[2].replace(/,/g, '')),
-	// 	target_fat: parseInt(targetArray[3].replace(/,/g, '')),
-	// 	target_protein: parseInt(targetArray[4].replace(/,/g, '')),
-	// 	target_sodium: parseInt(targetArray[5].replace(/,/g, ''))
-	// };
+	var calories = filteredArray[0]+filteredArray[6]+filteredArray[12]+filteredArray[18]
+	var carbs = filteredArray[1]+filteredArray[7]+filteredArray[13]+filteredArray[19]
+	var fat = filteredArray[2]+filteredArray[8]+filteredArray[14]+filteredArray[20]
+	var protein = filteredArray[3]+filteredArray[9]+filteredArray[15]+filteredArray[21]
+	var sodium = filteredArray[4]+filteredArray[10]+filteredArray[16]+filteredArray[22]
+	var sugar = filteredArray[5]+filteredArray[11]+filteredArray[17]+filteredArray[23]
 
-	module.exports = remainingArray;
-	console.log(remainingArray)
+	Diary.create({
+		calories: calories,
+		carbs: carbs,
+		fat: fat,
+		protein: protein,
+		sodium: sodium,
+		sugar: sugar
+	})
 });
 
 

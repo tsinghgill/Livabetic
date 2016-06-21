@@ -1,0 +1,17 @@
+<% include ./partials/header.ejs %>
+<body>
+    <div id="wrapper">
+        <% include ./partials/navigation.ejs %>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+            <% include ./partials/pageheader.ejs %>
+            </div>
+              <form method="post" action="/upload/myfitnesspal">
+                <input type="text" name="myFitnessPalUser" placeholder="myFitnessPal Username">
+                <button type="submit" value="submit" id="submit">Synchronize</button>
+              </form>
+        </div>
+    </div>
+<% include ./partials/scripts.ejs %>
+</body>
+</html>
