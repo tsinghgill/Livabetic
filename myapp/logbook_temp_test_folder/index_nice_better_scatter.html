@@ -57,9 +57,19 @@
           }
           return d;
         })
-      });          
+      });     
+
+     
 
       var chart;
+      // chart: {
+      //    pointSize: 20;
+      // }
+
+      // chart
+      //   .pointSize(26) // default size
+      //   .pointDomain([16,256]) //set to speed up calculation, needs to be unset if there is a custom size accessor;
+      
       nv.addGraph(function() {
         chart = nv.models.scatterChart()
           .showDistX(true)
