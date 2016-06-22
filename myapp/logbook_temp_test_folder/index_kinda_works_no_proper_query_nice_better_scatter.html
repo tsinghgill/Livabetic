@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.3/nv.d3.min.js'></script>
-  <link href='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css' rel='stylesheet'>
+  <script src="/build/nv.d3.min.js"></script>
+  <link rel="stylesheet" href="/build/nv.d3.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 
   <style>
@@ -70,7 +70,8 @@
           })
           .y(function (d) { 
             return d['BG Reading (mmol/L)'] 
-          });
+          })
+          .pointSize(60);
         
         // chart.tooltipContent(function(key) {
         //     return '<h3>' + key + '</h3>';
