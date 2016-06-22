@@ -43,8 +43,8 @@
 				HEIGHT = 360,
 				RADIUS = Math.min(WIDTH, HEIGHT) /2;
 
-		var legacySize = 14,
-				legacySpacing = 3;
+		var legacySize = 12,
+				legacySpacing = 15;
 
 		var color = d3.scale.category10();
 
@@ -108,9 +108,9 @@
 			
 			legacy.append('text')
 				.attr('x', legacySize + legacySpacing)
-				.attr('y', legacySize - legacySpacing)
+				.attr('y', legacySize - legacySpacing + 18)
 				.text(function(d) { 
-					return d; 
+					return d.toUpperCase(); 
 			}); 
 
 
