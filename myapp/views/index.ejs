@@ -6,13 +6,9 @@
   </head>
   <body id="home-page">
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
     <button><a href="/login">Login</a></button>
+    <p>Start managing your diabetes! Start now</p>
     <button><a href="/signup">Signup</a></button>
-    <form id="upload-form" enctype="multipart/form-data" method="post" action="/upload/data">
-      <input type="file" name="csvdata" accept="text/csv">
-      <input type="submit" value="submit" id="submit">
-    </form>
     <% include ./partials/scripts.ejs %>
     <script>
       $.get('/tatti')

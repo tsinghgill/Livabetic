@@ -27,6 +27,53 @@ body#home-page {
 	background-size: 1920px 1080px;
 }
 
+#home-page h1{
+  top: 10%;
+  font-family: 'Lato';
+  text-align: center;
+  font-size: 7em;
+  line-height: 80px;
+  text-align: center;
+  padding: 25px;
+  /*/////////MAGIC//HERE////////*/
+  background: #111;
+  color: white;
+  mix-blend-mode: multiply;
+  /*////////////////////////////*/
+}
+
+#home-page p{
+  font-family: 'Ubuntu';
+  font-size: 4em;
+  text-align: center;
+  color: #ecf0f1;
+}
+a {
+	text-decoration: none;
+}
+
+button {
+	font-family: "Comfortaa", cursive;
+	text-transform: uppercase;
+	font-weight: 300;
+	background: #4CAF50;
+	text-align: center;
+}
+
+body#home-page button {
+	display:block;
+	margin: 0 auto 100px;
+	width: 20%;
+	border: 0;
+	padding: 15px;
+	color: #FFFFFF;
+	background: #001f3f; 
+	font-size: 14px;
+	-webkit-transition: all 0.3 ease;
+	transition: all 0.3 ease;
+	cursor: pointer;	
+}
+
 body#login-page {
 	background-image: url('http://4.bp.blogspot.com/-Pz5yFoEIA-g/VLQKunxV2hI/AAAAAAAABIk/X2zecvG0BVI/s1600/14%2B-%2B10(1).png');
 }
@@ -35,16 +82,6 @@ body#signup-page {
 	background-image: url('https://4.bp.blogspot.com/-xLtggSLVA9g/VkrREs8tciI/AAAAAAAB4vg/G6wBCid2irU/s0/Healthy_Food_Healthy_Mind_wallpaper.jpg');
 	background-size: 100% 100%;
 }
-
-
-/*body#login-page::after {
-	opacity: 0.5;
-	top:0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	position: absolute;
-}*/
 
 .form {
 	position: relative;
@@ -67,12 +104,9 @@ body#signup-page {
 	box-sizing: border-box;
 	font-size: 14px;
 }
+
 .form button {
-	font-family: "Comfortaa", cursive;
-	font-weight: 300;
-	text-transform: uppercase;
 	outline: 0;
-	background: #4CAF50;
 	width: 100%;
 	border: 0;
 	padding: 15px;
