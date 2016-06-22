@@ -1,120 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<style>
-	  .legacy {
-	    font-size: 12px;
-	  }
-	  rect {
-	    stroke-width: 2;
-	  }
-	</style>:
 	<meta charset="UTF-8">
-	<title>TEST WEB SCRAPE</title>
-<!-- 	<script src="graph.js"></script> -->
-<!-- <script src="app.js"></script> -->
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>	<script src='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.3/nv.d3.min.js'></script>
-	<link href='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css' rel='stylesheet'>
-</head>
-<body>
-	<h1>HELLO</h1>
-	<div id="chart"></div>
-	<script>
-		/* Initiate Variables */
+	<title>Document</title>
+	<head>
+	  <!-- Plotly.js -->
+	  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 
-		var nutritionalData = [
-		{
-			// id: 1,
-			calories: 1939,
-			carbs: 224,
-			fat: 74,
-			protein: 72,
-			sodium: 1662,
-			sugar: 114,
-			water: null,
-			// createdAt: "2016-06-21T18:57:03.038Z",
-			// updatedAt: "2016-06-21T18:57:03.038Z",
-			// user_id: null
-		}
-	];
+	</head>
 
-		var WIDTH = 360,
-				HEIGHT = 360,
-				RADIUS = Math.min(WIDTH, HEIGHT) /2;
+	<body>
+	  <div id="myDiv" style="width: 480px; height: 400px;"></div>
+	  <script>
+	  	'use strict';
+	  	var xDate = [];
+	  	var yTotal = [];
+	  	uPlotly.d3.csv('carelink.csv', function(error, data) {
+  			data.forEach(function(d) { //2013-10-04 22:23:00
+  				xDate.push(moment(d['Date'], 'DD/MM/YY').format('YYYY-MM-DD'));
+  				if (d['Daily Insulin Total (U)'].length > 0) {
+  					yTotal.push(parseFloat(d['Daily Insulin Total (U)']))
+  				}
+		  	var data = [{
+		  	  x: xDate,
+		  	  y: yTotal,
+		  	  type: 'bar'
+		  	}];
+  			Plotly.newPlot('myDiv', data);
+		  });
+  		console.log(xDate, yTotal);
+  		});
 
-		var legacySize = 14,
-				legacySpacing = 3;
+	  </script>
+	</body>
 
-		var color = d3.scale.category10();
-
-		var svg = d3.select('#chart')
-			.append('svg')
-			.attr('width', WIDTH)
-			.attr('height', HEIGHT)
-			.append('g')
-			.attr('transform', 'translate(' + (WIDTH / 2) + ',' + (HEIGHT / 2) + ')');
-		
-		var arc = d3.svg.arc()
-		    .outerRadius(RADIUS - 10)
-		    .innerRadius(140);
-
-    // var nutrition = nutritionalData.filter(function(value){
-    // 	for (var i in value){
-    // 		debugger;
-    // 		return value[i] > 0
-    // 	}
-    // });
-
-
-
-  	// var val;
-		var pie = d3.layout.pie()
-      .value(function(d, i) { 
-      	// debugger;
-      	for (var key in d) {
-      		if (d[key] > 0){
-      			console.log(d[key]);
-
-      		}
-      		// debugger;
-    			// return val;
-      	}
-      });
-
-    var path = svg.selectAll('path')
-      .data(pie(nutritionalData))
-      .enter()
-      .append('path')
-      .attr('d', arc)
-      .attr('fill', function(d, i) { 
-        return color(d.data);
-      });
-
-		/* Set Up The Legacy (Panda, Panda, Panda, Panda Panda..!*/
-		var legacy = svg.selectAll('.legacy')
-			.data(color.domain())
-			// .data(nutritionalData)
-			.enter()
-			.append('g')
-			.attr('class', 'legacy')
-	
-
-			legacy.append('circle')
-				.attr('cx', legacySize)
-				.attr('cy', legacySize)
-				.attr('r', legacySize)
-				.style('fill', color)
-				legacy.append('text')
-				.attr('x', legacySize + legacySpacing)
-				.attr('y', legacySize - legacySpacing)
-				// .data(temp)
-				.text(function(d, i){
-					debugger;
-					for (var key in d){
-						return key;
-					}
-				});
-
-	</script>
-</body>
 </html>
+
+

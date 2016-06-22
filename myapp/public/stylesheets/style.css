@@ -89,3 +89,7 @@ body#signup-page {
 a {
 	color: #00B7FF;
 }
+
+.navbar {
+	height: 800px;
+}

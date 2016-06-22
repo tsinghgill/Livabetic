@@ -5,9 +5,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.3/nv.d3.min.js'></script>
   <link href='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css' rel='stylesheet'>
-  <script src="http://nvd3.org/assets/js/data/stream_layers.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-
 
   <style>
     text {
@@ -24,12 +22,13 @@
     }
   </style>
 </head>
-
-<body class='with-3d-shadow with-transitions'>
-  <div id="test1" class="chartWrap">
-    <svg></svg>
-  </div>
-  
+<body>
+  <div class='with-3d-shadow with-transitions'>
+    <div id="test1" class="chartWrap">
+      <svg></svg>
+    </div>
+  </div>  
+</body>
   <script>
     'use strict';
     d3.csv("carelink.csv", function(error, data) {
@@ -62,14 +61,6 @@
      
 
       var chart;
-      // chart: {
-      //    pointSize: 20;
-      // }
-
-      // chart
-      //   .pointSize(26) // default size
-      //   .pointDomain([16,256]) //set to speed up calculation, needs to be unset if there is a custom size accessor;
-      
       nv.addGraph(function() {
         chart = nv.models.scatterChart()
           .showDistX(true)
