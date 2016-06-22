@@ -33,6 +33,19 @@ router.get('/tatti', function(req, res) {
   })
 });
 
+// DAILY TOTAL WITH DATE QUERY
+ var totals = []
+ var instance = function(inst) {
+   totals.push(inst.get())
+ }
+ Log.findAll({
+   attributes: ['date', 'daily_total'],
+   where: { daily_total: { gt: 0 } }
+ }).then(function(data) {
+   data.forEach(instance)
+   console.log(totals)
+ })
+
 router.post('/upload/data', upload, function(req, res) {
 	csv.fromString(req.file.buffer.toString(), {headers : true })
 	.on("data", function(data){

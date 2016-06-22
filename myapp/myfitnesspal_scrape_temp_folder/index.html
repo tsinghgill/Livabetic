@@ -12,7 +12,7 @@
 	<body>
 	  <div id="myDiv" style="width: 480px; height: 400px;"></div>
 	  <script>
-	  // 	'use strict';
+	  	'use strict';
 			// data = [ 
 			// 	{ date: '2016-05-09T00:00:00.000Z', bg_reading: 5.06923076923077 },
 			//   { date: '2016-06-02T00:00:00.000Z', bg_reading: 1.33636363636364 },
@@ -109,91 +109,41 @@
   	// 	data.forEach(function(d) {
   	// 		xDate.push(new Date (d['date']).getDate());
   	// 		yTotal.push(parseFloat(d['bg_reading']))
-  		// });
-  		
-  		var plotly = require('plotly')('dsomel21', '50c9e5uxb0');
+  	// 	});
 
-  		var trace1 = {
-  		  x: [52698, 43117],
-  		  y: [53, 31],
-  		  mode: "markers",
-  		  name: "North America",
-  		  text: ["United States", "Canada"],
-  		  marker: {
-  		    color: "rgb(164, 194, 244)",
-  		    size: 12,
-  		    line: {
-  		      color: "white",
-  		      width: 0.5
-  		    }
-  		  },
-  		  type: "scatter"
-  		};
-  		var trace2 = {
-  		  x: [39317, 37236, 35650, 30066, 29570, 27159, 23557, 21046, 18007],
-  		  y: [33, 20, 13, 19, 27, 19, 49, 44, 38],
-  		  mode: "markers",
-  		  name: "Europe",
-  		  text: ["Germany", "Britain", "France", "Spain", "Italy", "Czech Rep.", "Greece", "Poland"],
-  		  marker: {
-  		    color: "rgb(255, 217, 102)",
-  		    size: 12,
-  		    line: {
-  		      color: "white",
-  		      width: 0.5
-  		    }
-  		  },
-  		  type: "scatter"
-  		};
-  		var trace3 = {
-  		  x: [42952, 37037, 33106, 17478, 9813, 5253, 4692, 3899],
-  		  y: [23, 42, 54, 89, 14, 99, 93, 70],
-  		  mode: "markers",
-  		  name: "Asia/Pacific",
-  		  text: ["Australia", "Japan", "South Korea", "Malaysia", "China", "Indonesia", "Philippines", "India"],
-  		  marker: {
-  		    color: "rgb(234, 153, 153)",
-  		    size: 12,
-  		    line: {
-  		      color: "white",
-  		      width: 0.5
-  		    }
-  		  },
-  		  type: "scatter"
-  		};
-  		var trace4 = {
-  		  x: [19097, 18601, 15595, 13546, 12026, 7434, 5419],
-  		  y: [43, 47, 56, 80, 86, 93, 80],
-  		  mode: "markers",
-  		  name: "Latin America",
-  		  text: ["Chile", "Argentina", "Mexico", "Venezuela", "Venezuela", "El Salvador", "Bolivia"],
-  		  marker: {
-  		    color: "rgb(142, 124, 195)",
-  		    size: 12,
-  		    line: {
-  		      color: "white",
-  		      width: 0.5
-  		    }
-  		  },
-  		  type: "scatter"
-  		};
-  		var data = [trace1, trace2, trace3, trace4];
-  		var layout = {
-  		  title: "Quarter 1 Growth",
-  		  xaxis: {
-  		    title: "GDP per Capita",
-  		    showgrid: false,
-  		    zeroline: false
-  		  },
-  		  yaxis: {
-  		    title: "Percent",
-  		    showline: false
-  		  }
-  		};
-  		var graphOptions = {layout: layout, filename: "line-style", fileopt: "overwrite"};
-  		plotly.plot(data, graphOptions, function (err, msg) {
-  		    console.log(msg);
-  		});
+  	var trace6 = {
+  	  x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 
+  	  y: [10, 8, 6, 4, 2, 0, 2, 4, 2, 0], 
+  	  line: {color: "rgb(231,107,243)"}, 
+  	  mode: "lines", 
+  	  name: "Ideal", 
+  	  type: "scatter"
+  	};
+  	var data = [trace6];
+  	var layout = {
+  	  paper_bgcolor: "rgb(255,255,255)", 
+  	  plot_bgcolor: "rgb(229,229,229)", 
+  	  xaxis: {
+  	    gridcolor: "rgb(255,255,255)", 
+  	    range: [1, 10], 
+  	    showgrid: true, 
+  	    showline: false, 
+  	    showticklabels: true, 
+  	    tickcolor: "rgb(127,127,127)", 
+  	    ticks: "outside", 
+  	    zeroline: false
+  	  }, 
+  	  yaxis: {
+  	    gridcolor: "rgb(255,255,255)", 
+  	    showgrid: true, 
+  	    showline: false, 
+  	    showticklabels: true, 
+  	    tickcolor: "rgb(127,127,127)", 
+  	    ticks: "outside", 
+  	    zeroline: false
+  	  }
+  	};
+  	Plotly.plot('plotly-div', data, layout);
 
 	  </script>
   </body>
