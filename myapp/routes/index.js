@@ -18,9 +18,80 @@ var upload = multer({ inMemory: true }).single('csvdata');
 var moment = require('moment');
 var request = require('request');
 var cheerio = require('cheerio');
+var Sequelize = require('sequelize');
+
 
 /* All Routes */
 router.get('/', function(req, res, next) {
+  // // DAILY TOTAL WITH DATE QUERY
+  // var totals = []
+  // var instance = function(inst) {
+  //   totals.push(inst.get())
+  // }
+  // Log.findAll({
+  //   attributes: ['date', 'daily_total'],
+  //   where: { daily_total: { gt: 0 } }
+  // }).then(function(data) {
+  //   data.forEach(instance)
+  //   console.log(totals)
+  // })
+
+  // // AVG BG READING OF EACH DAY QUERY
+  // var totals = []
+  // var instance = function(inst) {
+  //   totals.push(inst.get())
+  // }
+  // Log.findAll({
+  //   attributes: ['date', [models.Sequelize.fn('AVG', models.Sequelize.col('bg_reading')), 'bg_reading']],
+  //   where: { bg_reading: { gt: 0 }},
+  //   group: 'date',
+  //   order: '"date" ASC'
+  // }).then(function(data) {
+  //   data.forEach(instance)
+  //   console.log(totals)
+  // })
+
+  // // // AVG BG READING OF EACH DAY FOR 3 MONTHS WITH DATE QUERY
+  // var totals = []
+  // var instance = function(inst) {
+  //   totals.push(inst.get())
+  // }
+  // Log.findAll({
+  //   attributes: [[models.Sequelize.fn('AVG', models.Sequelize.col('bg_reading')), 'bg_reading']],
+  //   limit: 90
+  // }).then(function(data) {
+  //   data.forEach(instance)
+  //   console.log(totals)
+  // })
+
+  // // AVG BG READING FOR 3 MONTHS WITHOUT DATE QUERY
+  // var totals = []
+  // var instance = function(inst) {
+  //   totals.push(inst.get())
+  // }
+  // Log.findAll({
+  //   attributes: [[models.Sequelize.fn('AVG', models.Sequelize.col('bg_reading')), 'bg_reading']],
+  //   group: 'date',
+  //   limit: 90
+  // }).then(function(data) {
+  //   data.forEach(instance)
+  //   console.log(totals)
+  // })
+
+  // AVG BG READING OF EACH DAY FOR 3 MONTHS WITH DATE QUERY
+  var totals = []
+  var instance = function(inst) {
+    totals.push(inst.get())
+  }
+  Log.findAll({
+    attributes: ['timestamp', 'bg_reading', 'bwz_carb_input'],
+    where: { $or: [ { bg_reading: { gt: 0 } }, { bwz_carb_input: { gt: 0 } } ] },
+    limit: 100
+  }).then(function(data) {
+    data.forEach(instance)
+    console.log(totals)
+  })
+
 	res.render('index', { title: 'Livabetic' })
 });
 
