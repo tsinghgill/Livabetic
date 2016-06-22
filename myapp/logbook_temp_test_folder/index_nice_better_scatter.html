@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.3/nv.d3.min.js'></script>
-  <link href='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css' rel='stylesheet'>
-  <script src="http://nvd3.org/assets/js/data/stream_layers.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.3/nv.d3.min.js'></script>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css' rel='stylesheet'>
+<script src="http://nvd3.org/assets/js/data/stream_layers.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script> -->
 
-
+<!-- 
   <style>
     text {
       font: 12px sans-serif;
@@ -22,103 +22,87 @@
       height: 500px;
       width: 900px;
     }
-  </style>
+  </style> -->
 </head>
 
-<body class='with-3d-shadow with-transitions'>
+<body>
+
+<!-- <div class='with-3d-shadow with-transitions'>
   <div id="test1" class="chartWrap">
     <svg></svg>
   </div>
-  
+</div> -->
   <script>
-    'use strict';
-    d3.csv("carelink.csv", function(error, data) {
-      var myData = [
-        {
-          key: "Blood Sugar",
-          values: []
-        }
-      ];
-      
-      data.forEach(function(d) { 
-        // console.log(d['BWZ Carb Input (grams)'])
-        // d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
-        debugger;
-        myData[0].values = data.map(function(d){
-          // debugger;
-          d.Date = moment(d.Date, 'DD/MM/YY').format("MMM Do");
-          d.Time = moment(d.Time, 'HH:mm:ss').hours();
-          // d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
-          if (typeof d['BG Reading (mmol/L)'] === 'undefined'){
-            d['BG Reading (mmol/L)'] = 0;
-          }
-          if (d['BG Reading (mmol/L)'].length > 0){
-            d['BG Reading (mmol/L)'] = parseFloat(d['BG Reading (mmol/L)']);
-          }
-          return d;
-        })
-      });     
+// 'use strict';
+// d3.csv("carelink.csv", function(error, data) {
+//   var myData = [
+//     {
+//       key: "Blood Sugar",
+//       values: []
+//     }
+//   ];
+  
+//   data.forEach(function(d) { 
+//     // console.log(d['BWZ Carb Input (grams)'])
+//     // d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
+//     debugger;
+//     myData[0].values = data.map(function(d){
+//       // debugger;
+//       d.Date = moment(d.Date, 'DD/MM/YY').format("MMM Do");
+//       d.Time = moment(d.Time, 'HH:mm:ss').hours();
+//       // d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
+//       if (typeof d['BG Reading (mmol/L)'] === 'undefined'){
+//         d['BG Reading (mmol/L)'] = 0;
+//       }
+//       if (d['BG Reading (mmol/L)'].length > 0){
+//         d['BG Reading (mmol/L)'] = parseFloat(d['BG Reading (mmol/L)']);
+//       }
+//       return d;
+//     })
+//   });     
 
-     
+//   var chart;
 
-      var chart;
-      // chart: {
-      //    pointSize: 20;
-      // }
+//   nv.addGraph(function() {
+//     chart = nv.models.scatterChart()
+//       .showDistX(true)
+//       .showDistY(true)
+//       .duration(300)
+//       .color(d3.scale.category10().range())
+//       .x(function (d) { 
+//         return d.Time //, d.Date            
+//       })
+//       .y(function (d) { 
+//         return d['BG Reading (mmol/L)'] 
+//       });
 
-      // chart
-      //   .pointSize(26) // default size
-      //   .pointDomain([16,256]) //set to speed up calculation, needs to be unset if there is a custom size accessor;
-      
-      nv.addGraph(function() {
-        chart = nv.models.scatterChart()
-          .showDistX(true)
-          .showDistY(true)
-          .duration(300)
-          .color(d3.scale.category10().range())
-          .x(function (d) { 
-            return d.Time //, d.Date            
-          })
-          .y(function (d) { 
-            return d['BG Reading (mmol/L)'] 
-          });
+//     chart.dispatch.on('renderEnd', function(){
+//       console.log('render complete');
+//     });
+
+//     var mintime = new Date('00:00:00');
+//     var maxtime = new Date('23:59:59');
+
+//     var x = d3.time.scale()
+//       .domain([mintime, maxtime]);
+
+//     chart.xAxis
+//       .scale(x)
+//       .axisLabel('Time')
+//       .rotateLabels(-45)
         
-        // chart.tooltipContent(function(key) {
-        //     return '<h3>' + key + '</h3>';
-        // });
+//     chart.yAxis.tickFormat(d3.format(''));
 
-        chart.dispatch.on('renderEnd', function(){
-          console.log('render complete');
-        });
+//     d3.select('#test1 svg')
+//       .datum(myData)
+//       .call(chart);
 
-        var mintime = new Date('00:00:00');
-        var maxtime = new Date('23:59:59');
-
-        var x = d3.time.scale()
-          .domain([mintime, maxtime]);
-
-        chart.xAxis
-          .scale(x)
-          .axisLabel('Time')
-          .rotateLabels(-45)
-          // .tickFormat(d3.time.format("%H"));
-          // .tickFormat(function(d) { 
-          //   return d3.time.format('%b %d')(new Date(d))
-          // });
-        // chart.x2Axis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
-            
-        chart.yAxis.tickFormat(d3.format(''));
-
-        d3.select('#test1 svg')
-          .datum(myData)
-          .call(chart);
-
-        nv.utils.windowResize(chart.update);
-          chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); 
-          });
-          return chart;
-      });
-    });
+//     nv.utils.windowResize(chart.update);
+//       chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); 
+//       });
+//       return chart;
+//   });
+// });
 
   </script>
 </body>

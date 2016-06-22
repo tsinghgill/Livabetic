@@ -89,3 +89,16 @@ body#signup-page {
 a {
 	color: #00B7FF;
 }
+/*
+text {
+  font: 12px sans-serif;
+}
+svg {
+  display: block;
+}
+html, body, #test1, svg {
+  margin: 0px;
+  padding: 0px;
+  height: 500px;
+  width: 900px;
+}*/
