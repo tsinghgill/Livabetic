@@ -13,7 +13,7 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>fuckthisshit<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Dilraj<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="/profile"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -27,21 +27,21 @@
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li>
-                        <a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                <ul id="clicky" class="nav navbar-nav side-nav">
+                    <li class="<% if (title == 'Dashboard'){ %>active<% }%>">
+                        <a href="/dashboard"><i class="fa fa-fw fa-dashboard" style="color: white"></i><span style="color: white"> Dashboard</span></a>
                     </li>
-                    <li class="active">
-                        <a href="/charts"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                    <li class="<% if (title == 'Charts'){ %>active<% }%>">
+                        <a href="/charts"><i class="fa fa-fw fa-bar-chart-o" style="color: white"></i><span style="color: white"> Charts</span></a>
                     </li>
-                    <li>
-                        <a href="/nutrition"><i class="fa fa-fw fa-glass"></i> Nutrition</a>
+                    <li class="<% if (title == 'Nutrition'){ %>active<% }%>">
+                        <a href="/nutrition"><i class="fa fa-fw fa-glass" style="color: white"></i><span style="color: white"> Nutrition</span></a>
                     </li>
-                    <li>
-                        <a href="/exercise"><i class="fa fa-fw fa-soccer-ball-o"></i> Exercise</a>
+                    <li class="<% if (title == 'Exercise'){ %>active<% }%>">
+                        <a href="/exercise"><i class="fa fa-fw fa-soccer-ball-o" style="color: white"></i><span style="color: white"> Exercise</span></a>
                     </li>
-                    <li>
-                        <a href="/myfitnesspal"><i class="fa fa-fw fa-soccer-ball-o"></i> myFitnessPal</a>
+                    <li class="<% if (title == 'myFitnessPal'){ %>active<% }%>">
+                        <a href="/myfitnesspal"><i class="fa fa-fw fa-soccer-ball-o" style="color: white"></i><span style="color: white"> myFitnessPal</span></a>
                     </li>
 <!--                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>

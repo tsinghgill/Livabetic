@@ -11,13 +11,6 @@
     <button><a href="/signup">Signup</a></button>
     <% include ./partials/scripts.ejs %>
     <script>
-      $.get('/tatti')
-      .done(function(data) {
-        console.log(data.Date)
-      })
-      .fail(function(err) {
-        console.error(err);
-      })
     </script>
   </body>
 </html>
