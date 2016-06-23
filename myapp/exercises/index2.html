@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+	<title>Document</title>
+</head>
+<body>
+<div id="exercise-pies"></div>
+<div id="exercise-bar"></div>
+
+	<script>
+	'use strict';
+		/* Get Users Steps Taken & Step Goals */
+		var steps = 5120;
+		var steps_goals = 10000 - steps;
+		var step_counter_data = [steps, steps_goals];
+
+		/* Get weight & weight goal */
+		var weight = 160;
+		var weight_goals = 170 - weight;
+		var weight_data = [weight, weight_goals];
+
+
+		/* Get running info & distance goal */
+		var run = 1.2;
+		var run_goals = 5 - run;
+		var run_data = [weight, weight_goals];
+
+		var bike = 2.7;
+		var swim = 0.4;
+		var workout = [bike, swim, run];
+
+		var data = [
+		{
+		  values: step_counter_data,
+		  labels: ['Steps', 'Remaining'],
+		  hole: .95,
+		  type: 'pie',
+		  domain: {
+		     x: [0, .48],
+		     y: [0, .49]
+		   },
+		  hoverinfo: 'value',
+	    textinfo: 'label'
+		},
+		{
+			values: weight_data,
+			labels: ['Weight', 'Goal'],
+			hole: .95,
+			type: 'pie',
+			domain: {
+		    x: [0.52, 1],
+		    y: [0, .49]
+		  },
+		  hoverinfo: 'value',
+	    textinfo: 'label'
+		},
+		{
+			values: run_data,
+			labels: ['Distance Run', 'Remaining'],
+			hole: .95,
+			type: 'pie',
+			domain: {
+		    x: [0, .48],
+		    y: [.51, 1]
+		  },
+		  hoverinfo: 'value',
+	    textinfo: 'label'
+		}
+	];
+
+		var layout = {
+		  height: 600,
+		  width: 750
+		};
+
+		Plotly.newPlot('exercise-pies', data, layout);
+
+
+
+		var bar_data = {
+		  x: workout,
+		  y: ['Biking', 'Swim', 'Run'],
+		  orientation: 'h',
+		  type: 'bar',
+		  marker: {
+		    color: '#1abc9c',
+		    width: 1
+		  },
+		  domain: {
+	      x: [0.52, 1],
+	      y: [0.52, 1]
+	    },
+		};
+
+		var bar_layout = {
+		  height: 300,
+		  width: 325,
+		  // barmode: 'stack'
+		};
+
+		Plotly.newPlot('exercise-bar', [bar_data], bar_layout);
+
+		
+	</script>
+</body>
+</html>
