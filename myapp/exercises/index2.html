@@ -7,8 +7,11 @@
 	<title>Document</title>
 </head>
 <body>
-<div id="exercise-pies"></div>
+<div id="ex-step-pies"></div>
+<div id="ex-weight-pies"></div>
+<div id="ex-run-pies"></div>
 <div id="exercise-bar"></div>
+<div id="macro"></div>
 
 	<script>
 	'use strict';
@@ -32,55 +35,43 @@
 		var swim = 0.4;
 		var workout = [bike, swim, run];
 
-		var data = [
+		var fat = 71;
+		var prot = 59;
+		var carbs = 120;
+		var macro_nut = [fat, prot, carbs];
+
+		var step_pie_data = [
 		{
 		  values: step_counter_data,
 		  labels: ['Steps', 'Remaining'],
 		  hole: .95,
 		  type: 'pie',
-		  domain: {
-		     x: [0, .48],
-		     y: [0, .49]
-		   },
 		  hoverinfo: 'value',
 	    textinfo: 'label'
-		},
+		}];
+
+		var weight_pie_data = [
 		{
 			values: weight_data,
 			labels: ['Weight', 'Goal'],
 			hole: .95,
 			type: 'pie',
-			domain: {
-		    x: [0.52, 1],
-		    y: [0, .49]
-		  },
 		  hoverinfo: 'value',
 	    textinfo: 'label'
-		},
+		}];
+		
+		var run_pie_data = [
 		{
 			values: run_data,
 			labels: ['Distance Run', 'Remaining'],
 			hole: .95,
 			type: 'pie',
-			domain: {
-		    x: [0, .48],
-		    y: [.51, 1]
-		  },
 		  hoverinfo: 'value',
 	    textinfo: 'label'
-		}
-	];
+		}];
 
-		var layout = {
-		  height: 600,
-		  width: 750
-		};
-
-		Plotly.newPlot('exercise-pies', data, layout);
-
-
-
-		var bar_data = {
+		var exercise_bar_data = [
+		{
 		  x: workout,
 		  y: ['Biking', 'Swim', 'Run'],
 		  orientation: 'h',
@@ -89,19 +80,43 @@
 		    color: '#1abc9c',
 		    width: 1
 		  },
-		  domain: {
-	      x: [0.52, 1],
-	      y: [0.52, 1]
-	    },
+		}];
+
+		var macro_data = [
+		{
+		  values: macro_nut,
+		  labels: ['Protein', 'Fat', 'Carbs'],
+		  hole: .95,
+		  type: 'pie',
+		  hoverinfo: 'value',
+	    textinfo: 'label'
+		}];
+
+
+
+		var layout = {
+		  height: 600,
+		  width: 750
 		};
 
-		var bar_layout = {
-		  height: 300,
-		  width: 325,
-		  // barmode: 'stack'
-		};
+		// Plotly.newPlot('ex-step-pies', step_pie_data, layout);
+		// Plotly.newPlot('ex-weight-pies', weight_pie_data, layout);
+		// Plotly.newPlot('ex-run-pies', run_pie_data, layout);
+		// Plotly.newPlot('macro', macro_data, layout);
+		Plotly.newPlot('exercise-bar', exercise_bar_data, layout);
 
-		Plotly.newPlot('exercise-bar', [bar_data], bar_layout);
+
+
+
+
+
+		// var bar_layout = {
+		//   height: 300,
+		//   width: 325,
+		//   // barmode: 'stack'
+		// };
+
+		// Plotly.newPlot('exercise-bar', [bar_data], bar_layout);
 
 		
 	</script>

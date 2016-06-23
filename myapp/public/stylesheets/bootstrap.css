@@ -7,8 +7,8 @@
 @import url(https://fonts.googleapis.com/css?family=Comfortaa:300|Ubuntu|Lato:400,700);
 
 html {
-  font-family: 'Comfortaa';  
-  /*font-family: sans-serif;*/
+  /*font-family: 'Comfortaa' !important;  */
+  font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
