@@ -313,20 +313,30 @@ router.get('/social', isLoggedIn, function(req, res) {
   res.render('social', { title: 'Social' })
 })
 
-router.get('/reminders', isLoggedIn, function(req, res) {
-  res.render('reminders', { title: 'Reminders' })
-  client.sendMessage({
-    to: '+16472990037',
-    from: '+16475034828',
-    body: 'Reminder!'
-  }, function(err, data) {
-    if (err) {
-      console.error('Could not notify administrator');
-      console.error(err);
-    } else {
-      console.log('-------------------------', data);
-    }
-  });
+
+
+// router.get('/reminders', isLoggedIn, function(req, res) {
+//   res.render('reminders', { title: 'Reminders' })
+//   client.sendMessage({
+//     to: '+16472990037',
+//     from: '+16475034828',
+//     body: 'Reminder!'
+//   }, function(err, data) {
+//     if (err) {
+//       console.error('Could not notify administrator');
+//       console.error(err);
+//     } else {
+//       console.log('-------------------------', data);
+//     }
+//   });
+// });
+
+router.post('/reminders', function(req, res) {
+  console.log(req);
+  res.render('here');
+  // var time = ;
+  // var message = ;
+  // res.render('login', { title: 'Livabetic', message: req.flash('loginMessage') }) // we will create the message in our passport.js file
 });
 
 router.get('/logout', function(req, res) {
