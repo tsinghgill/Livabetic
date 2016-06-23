@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Comfortaa:300|Ubuntu|Lato:400,700);
-/* 
-font-family: 'Comfortaa', cursive;
+ 
+/*font-family: 'Comfortaa', cursive;
 font-family: 'Ubuntu', sans-serif;
 font-family: 'Lato', sans-serif; */
 
@@ -10,6 +10,8 @@ body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	background: rgba(66, 66, 66, .8);
 }
+
+
 
 h1.top-message{
 	top: 100%;
@@ -41,6 +43,11 @@ body#home-page {
   color: white;
   mix-blend-mode: multiply;
   /*////////////////////////////*/
+}
+
+svg {
+	width: auto !important;
+	height: auto !important;
 }
 
 #home-page p{

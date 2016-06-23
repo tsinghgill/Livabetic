@@ -4,6 +4,9 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+@import url(https://fonts.googleapis.com/css?family=Comfortaa:300|Ubuntu|Lato:400,700);
+
+
 /* Global Styles */
 
 html {
@@ -37,6 +40,7 @@ body {
 }
 
 .huge {
+    font-family: 'Ubuntu', sans-serif;
     font-size: 50px;
     line-height: normal;
 }
@@ -76,11 +80,13 @@ body {
 .top-nav>.open>a,
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
+    font-family: 'Comfortaa', cursive;
     color: #002c59;
     background-color: #000;
 }
 
 .top-nav>.open>.dropdown-menu {
+    font-family: 'Comfortaa', cursive;
     float: left;
     position: absolute;
     margin-top: 0;
@@ -125,6 +131,7 @@ ul.alert-dropdown {
 
 @media(min-width:768px) {
     .side-nav {
+        font-family: 'Comfortaa', cursive;
         position: fixed;
         top: 51px;
         left: 225px;

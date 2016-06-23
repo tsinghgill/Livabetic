@@ -6,11 +6,13 @@
             <div class="container-fluid">
             <% include ./partials/pageheader.ejs %>
             </div>
-            <form action="/reminders" method="POST" id='reminder-form'>
+            <div class="form">
+            <form action="/reminders" method="POST" id='login-form'>
             	<input type="text" name="phone" placeholder="16472990037">
             	<input type="time" name="time"<br>
-            	<button type="submit">Remind</button>
+            	<button type="submit">Remind Me</button>
             </form>
+            </div>
         </div>
     </div>
 <% include ./partials/scripts.ejs %>
