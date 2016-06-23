@@ -308,8 +308,16 @@ router.post('/upload/myfitnesspal', function(req, res) {
   });
 })
 
+router.get('/social', isLoggedIn, function(req, res) {
+  res.render('social', { title: 'Social' })
+})
+
+router.get('/reminders', isLoggedIn, function(req, res) {
+  res.render('reminders', { title: 'Reminders' })
+})
+
 router.get('/logout', function(req, res) {
-  res.logout(); //this logout() method is provided by passport and it handles logging out
+  // res.logout(); //this logout() method is provided by passport and it handles logging out
   res.redirect('/');
 });
 

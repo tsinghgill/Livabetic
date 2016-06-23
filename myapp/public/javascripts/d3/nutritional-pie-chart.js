@@ -16,8 +16,8 @@ var nutritionalData = [
 }
 ];
 
-var WIDTH = 360,
-    HEIGHT = 360,
+var WIDTH = 500,
+    HEIGHT = 500,
     RADIUS = Math.min(WIDTH, HEIGHT) /2;
 
 var legacySize = 12,
