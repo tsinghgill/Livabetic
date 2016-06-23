@@ -1,5 +1,26 @@
 'use strict';
 
+  // // AVG BG READING OF EACH DAY QUERY
+  // var totals = []
+  // var instance = function(inst) {
+  //   totals.push(inst.get())
+  // }
+  // Log.findAll({
+  //   attributes: ['date', [models.Sequelize.fn('AVG', models.Sequelize.col('bg_reading')), 'bg_reading']],
+  //   where: { bg_reading: { gt: 0 }},
+  //   group: 'date',
+  //   order: '"date" ASC'
+  // }).then(function(data) {
+  //   data.forEach(instance)
+  //   console.log(totals)
+  // })
+
+
+
+$.get('/upload/bgheatmap')
+.done(function(res) {
+
+
 var margin = { top: 50, right: 0, bottom: 100, left: 30 },
     /* Initate Variables */
     width = 900 - margin.left - margin.right,
@@ -105,3 +126,9 @@ var heatmapChart = function(csvFile) {
 };
 
 heatmapChart(datasets[0]);
+
+
+})
+.fail(function(err) {
+  console.log(err)
+})

@@ -207,13 +207,15 @@ router.get('/upload/dailytotalinsulin', function(req, res) {
   Log.findAll({
     attributes: ['date', 'daily_total'],
     where: { daily_total: { gt: 0 } },
-    limit: 14
+    // limit: 14
   }).then(function(response) {
     // d.forEach(instance)
 
     var transformedData = response.map(data => data.get())
     res.json({ data: transformedData })
   })
+
+
 
 // // DAILY TOTAL WITH DATE QUERY
 // var totals = []
@@ -243,6 +245,19 @@ router.get('/upload/dateBGreading', function(req, res) {
 
 })
 
+
+router.get('/upload/bgheatmap', function(req, res) {
+
+  Log.findAll({
+    attributes: ['date', 'bg_reading'],
+    where: { bg_reading: { gt: 0 } },
+    limit: 7,
+    order: '"date" ASC'
+  }).then(function(response) {
+    res.json({ data: response.map(data => data.get())})
+  })
+
+})
 
 router.get('/nutrition', isLoggedIn, function(req, res) {
   res.render('nutrition', { title: 'Nutrition' })
@@ -326,6 +341,21 @@ router.get('/social', isLoggedIn, function(req, res) {
 
 router.get('/reminders', isLoggedIn, function(req, res) {
   res.render('reminders', { title: 'Reminders' })
+  // client.sendMessage({
+  //   to: '+16472990037',
+  //   from: '+16475034828',
+  //   body: 'Reminder!'
+  // }, function(err, data) {
+  //   if (err) {
+  //     console.error('Could not notify administrator');
+  //     console.error(err);
+  //   } else {
+  //     console.log('-------------------------', data);
+  //   }
+  // });
+});
+
+router.post('/reminders', function(req, res) {
   client.sendMessage({
     to: '+16472990037',
     from: '+16475034828',
@@ -338,15 +368,8 @@ router.get('/reminders', isLoggedIn, function(req, res) {
       console.log('-------------------------', data);
     }
   });
+  res.render('dashboard', { title: 'Dashboard' })
 });
-
-// router.post('/reminders', function(req, res) {
-//   console.log(req);
-//   res.render('here');
-//   // var time = ;
-//   // var message = ;
-//   // res.render('login', { title: 'Livabetic', message: req.flash('loginMessage') }) // we will create the message in our passport.js file
-// });
 
 router.get('/logout', function(req, res) {
   // res.logout(); //this logout() method is provided by passport and it handles logging out
