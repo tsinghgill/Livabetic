@@ -19,7 +19,8 @@ var moment = require('moment');
 var request = require('request');
 var cheerio = require('cheerio');
 var Sequelize = require('sequelize');
-
+var twilio = require('twilio')
+var client = twilio('AC9582a7e1134b484dba4314bd0eb8e629', 'f7a8b979871fe2378a48ccf1b40fd1c0')
 
 /* All Routes */
 router.get('/', function(req, res, next) {
@@ -314,7 +315,19 @@ router.get('/social', isLoggedIn, function(req, res) {
 
 router.get('/reminders', isLoggedIn, function(req, res) {
   res.render('reminders', { title: 'Reminders' })
-})
+  client.sendMessage({
+    to: '+16472990037',
+    from: '+16475034828',
+    body: 'Reminder!'
+  }, function(err, data) {
+    if (err) {
+      console.error('Could not notify administrator');
+      console.error(err);
+    } else {
+      console.log('-------------------------', data);
+    }
+  });
+});
 
 router.get('/logout', function(req, res) {
   // res.logout(); //this logout() method is provided by passport and it handles logging out

@@ -54,16 +54,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-
-/* Middleware for Twilio of errors */
-// app.use(twilioNotifications.notifyOnError);
-
-
-
-
-
-// error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
