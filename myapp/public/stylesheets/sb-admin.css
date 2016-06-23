@@ -76,7 +76,7 @@ body {
 .top-nav>.open>a,
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
-    color: #fff;
+    color: #002c59;
     background-color: #000;
 }
 
@@ -141,12 +141,15 @@ ul.alert-dropdown {
 
     .side-nav>li>a {
         width: 225px;
+        color: #002c59;
     }
 
     .side-nav li a:hover,
     .side-nav li a:focus {
         outline: none;
-        background-color: #000 !important;
+        color: #002c59;
+        background-color: #002c59 !important;
+        opacity: 0.5;
     }
 }
 
@@ -158,7 +161,7 @@ ul.alert-dropdown {
     display: block;
     padding: 10px 15px 10px 38px;
     text-decoration: none;
-    color: #999;
+    color: #002c59;
 }
 
 .side-nav>li>ul>li>a:hover {

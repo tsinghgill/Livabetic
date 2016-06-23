@@ -45,7 +45,7 @@ app.use(flash()); //allows us to use connect-flash for flash messages that are s
 app.use('/', routes);
 app.use('/users', users);
 
-app.use(express.static(__dirname, 'public/build'));
+// app.use(express.static(__dirname, 'public/build'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,7 +56,7 @@ app.use(function(req, res, next) {
 
 
 /* Middleware for Twilio of errors */
-app.use(twilioNotifications.notifyOnError);
+// app.use(twilioNotifications.notifyOnError);
 
 
 
