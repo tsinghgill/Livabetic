@@ -175,7 +175,16 @@ router.post('/signup', passport.authenticate('local-signup', {
 )
 
 router.get('/dashboard', isLoggedIn, function(req, res) {
-  // console.log(req.params.user)
+  // var instance = function(inst) {
+  //   var sugar = inst.get()
+  // }
+  Diary.findAll({
+    attributes: ['sugar'],
+    limit: 1
+  }).then(function(data) {
+    var transformedData = response.map(data => data.get())
+    res.json({ data: transformedData })
+  })
 	res.render('dashboard', { title: 'Dashboard' })
   // console.log(app.get('user'))
 });
@@ -309,7 +318,7 @@ router.post('/upload/myfitnesspal', function(req, res) {
 })
 
 router.get('/social', isLoggedIn, function(req, res) {
-  res.render('social', { title: 'Social' })
+  res.render('social', { title: 'RSS' })
 })
 
 router.get('/reminders', isLoggedIn, function(req, res) {
