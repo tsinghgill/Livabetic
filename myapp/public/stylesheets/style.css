@@ -4,8 +4,9 @@ font-family: 'Comfortaa', cursive;
 font-family: 'Ubuntu', sans-serif;
 font-family: 'Lato', sans-serif; */
 
+
 body {
-	padding: 50px;
+	padding-top: 50px;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	background: rgba(66, 66, 66, .8);
 }
@@ -23,17 +24,62 @@ h1.top-message{
 }
 
 body#home-page {
-	background-image: url('https://static.pexels.com/photos/3329/food-kitchen-cutting-board-cooking-large.jpg');
-	background-size: 1920px 1080px;
+	background-image: url("https://cdn.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-9-full.jpg");
+}
+
+#home-page h1{
+  top: 10%;
+  font-family: 'Lato';
+  text-align: center;
+  font-size: 7em;
+  line-height: 80px;
+  text-align: center;
+  padding: 25px;
+  /*/////////MAGIC//HERE////////*/
+  background: #002c59;
+  opacity: 0.7;
+  color: white;
+  mix-blend-mode: multiply;
+  /*////////////////////////////*/
+}
+
+#home-page p{
+  font-family: 'Ubuntu';
+  font-size: 4em;
+  text-align: center;
+  color: #ecf0f1;
+}
+a {
+	text-decoration: none;
+}
+
+button {
+	font-family: "Comfortaa", cursive;
+	text-transform: uppercase;
+	font-weight: 300;
+	background: #001f3f; 
+	text-align: center;
+}
+
+body#home-page button {
+	display:block;
+	margin: 0 auto 100px;
+	width: 20%;
+	border: 0;
+	padding: 15px;
+	color: #FFFFFF;
+	font-size: 14px;
+	-webkit-transition: all 0.3 ease;
+	transition: all 0.3 ease;
+	cursor: pointer;	
 }
 
 body#login-page {
-	background-image: url('http://4.bp.blogspot.com/-Pz5yFoEIA-g/VLQKunxV2hI/AAAAAAAABIk/X2zecvG0BVI/s1600/14%2B-%2B10(1).png');
+	background-image: url("https://cdn.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-9-full.jpg");
 }
 
 body#signup-page {
-	background-image: url('https://4.bp.blogspot.com/-xLtggSLVA9g/VkrREs8tciI/AAAAAAAB4vg/G6wBCid2irU/s0/Healthy_Food_Healthy_Mind_wallpaper.jpg');
-	background-size: 100% 100%;
+	background-image: url("https://cdn.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-9-full.jpg");
 }
 
 
@@ -67,12 +113,11 @@ body#signup-page {
 	box-sizing: border-box;
 	font-size: 14px;
 }
-.form button {
+.form button, #submit {
 	font-family: "Comfortaa", cursive;
 	font-weight: 300;
 	text-transform: uppercase;
 	outline: 0;
-	background: #4CAF50;
 	width: 100%;
 	border: 0;
 	padding: 15px;
@@ -82,8 +127,8 @@ body#signup-page {
 	transition: all 0.3 ease;
 	cursor: pointer;
 }
-.form button:hover,.form button:active,.form button:focus {
-	background: #43A047;
+button:hover, button:active, button:focus {
+	background: #002c59; 
 }
 
 a {

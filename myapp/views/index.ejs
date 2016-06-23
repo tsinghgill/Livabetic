@@ -6,18 +6,11 @@
   </head>
   <body id="home-page">
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <button><a href="/login">Login</a></button>
-    <button><a href="/signup">Signup</a></button>
+    <a href="/login"><button>Login</button></a>
+    <p>Start managing your diabetes!</p>
+    <a href="/signup"><button>Signup</button></a>
     <% include ./partials/scripts.ejs %>
     <script>
-      $.get('/tatti')
-      .done(function(data) {
-        console.log(data.Date)
-      })
-      .fail(function(err) {
-        console.error(err);
-      })
     </script>
   </body>
 </html>

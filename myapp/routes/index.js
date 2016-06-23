@@ -23,18 +23,6 @@ var Sequelize = require('sequelize');
 
 /* All Routes */
 router.get('/', function(req, res, next) {
-  // // DAILY TOTAL WITH DATE QUERY
-  // var totals = []
-  // var instance = function(inst) {
-  //   totals.push(inst.get())
-  // }
-  // Log.findAll({
-  //   attributes: ['date', 'daily_total'],
-  //   where: { daily_total: { gt: 0 } }
-  // }).then(function(data) {
-  //   data.forEach(instance)
-  //   console.log(totals)
-  // })
 
   // // AVG BG READING OF EACH DAY QUERY
   // var totals = []
@@ -51,7 +39,7 @@ router.get('/', function(req, res, next) {
   //   console.log(totals)
   // })
 
-  // // // AVG BG READING OF EACH DAY FOR 3 MONTHS WITH DATE QUERY
+  // // AVG BG READING OF EACH DAY FOR 3 MONTHS WITH DATE QUERY
   // var totals = []
   // var instance = function(inst) {
   //   totals.push(inst.get())
@@ -78,44 +66,36 @@ router.get('/', function(req, res, next) {
   //   console.log(totals)
   // })
 
-  // AVG BG READING OF EACH DAY FOR 3 MONTHS WITH DATE QUERY
-  var totals = []
-  var instance = function(inst) {
-    totals.push(inst.get())
-  }
-  Log.findAll({
-    attributes: ['timestamp', 'bg_reading', 'bwz_carb_input'],
-    where: { $or: [ { bg_reading: { gt: 0 } }, { bwz_carb_input: { gt: 0 } } ] },
-    limit: 100
-  }).then(function(data) {
-    data.forEach(instance)
-    console.log(totals)
-  })
+  // // AVG BG READING OF EACH DAY FOR 3 MONTHS WITH DATE QUERY
+  // var totals = []
+  // var instance = function(inst) {
+  //   totals.push(inst.get())
+  // }
+  // Log.findAll({
+  //   attributes: ['time', 'date' , 'bg_reading', 'bwz_carb_input'],
+  //   where: { $or: [ { bg_reading: { gt: 0 } }, { bwz_carb_input: { gt: 0 } } ] },
+  //   limit: 
+  // }).then(function(data) {
+  //   data.forEach(instance)
+  //   console.log(totals)
+  // })
 
 	res.render('index', { title: 'Livabetic' })
 });
 
-router.get('/tatti', function(req, res) {
-  Diary.findAll({
-    limit: 2
-  })
-  .then(function(data) {
-    res.send(data)
-  })
-});
 
-// DAILY TOTAL WITH DATE QUERY
- var totals = []
- var instance = function(inst) {
-   totals.push(inst.get())
- }
- Log.findAll({
-   attributes: ['date', 'daily_total'],
-   where: { daily_total: { gt: 0 } }
- }).then(function(data) {
-   data.forEach(instance)
-   console.log(totals)
- })
+// // DAILY TOTAL WITH DATE QUERY
+//  var totals = []
+//  var instance = function(inst) {
+//    totals.push(inst.get())
+//  }
+//  Log.findAll({
+//    attributes: ['date', 'daily_total'],
+//    where: { daily_total: { gt: 0 } }
+//  }).then(function(data) {
+//    data.forEach(instance)
+//    console.log(totals)
+//  })
 
 router.post('/upload/data', upload, function(req, res) {
 	csv.fromString(req.file.buffer.toString(), {headers : true })
@@ -207,6 +187,52 @@ router.get('/profile', isLoggedIn, function(req, res) {
 router.get('/charts', isLoggedIn, function(req, res) {
   res.render('charts', { title: 'Charts' })
 });
+
+router.get('/upload/dailytotalinsulin', function(req, res) {
+
+  // var data = []
+  // var instance = function(inst) {
+    // data.push(inst.get())
+  // }
+  Log.findAll({
+    attributes: ['date', 'daily_total'],
+    where: { daily_total: { gt: 0 } },
+    limit: 14
+  }).then(function(response) {
+    // d.forEach(instance)
+
+    var transformedData = response.map(data => data.get())
+    res.json({ data: transformedData })
+  })
+
+// // DAILY TOTAL WITH DATE QUERY
+// var totals = []
+// var instance = function(inst) {
+//   totals.push(inst.get())
+// }
+// Log.findAll({
+//   attributes: ['date', 'daily_total'],
+//   where: { daily_total: { gt: 0 } }
+// }).then(function(data) {
+//   data.forEach(instance)
+//   console.log(totals)
+// })
+
+})
+
+router.get('/upload/dateBGreading', function(req, res) {
+
+  Log.findAll({
+    attributes: ['date', [models.Sequelize.fn('AVG', models.Sequelize.col('bg_reading')), 'bg_reading']],
+    where: { bg_reading: { gt: 0 } },
+    group: 'date',
+    order: '"date" ASC'
+  }).then(function(response) {
+    res.json({ data: response.map(data => data.get())})
+  })
+
+})
+
 
 router.get('/nutrition', isLoggedIn, function(req, res) {
   res.render('nutrition', { title: 'Nutrition' })

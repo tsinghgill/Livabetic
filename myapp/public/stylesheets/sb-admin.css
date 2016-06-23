@@ -6,25 +6,34 @@
 
 /* Global Styles */
 
+html {
+    height: 100%;
+    background-color: white;
+}
+
 body {
-    margin-top: 100px;
-    background-color: #222;
+    /*margin-top: 100px;*/
+    background-color: white;
+    height: 100%;
 }
 
 @media(min-width:768px) {
     body {
-        margin-top: 50px;
+        margin-top: 0px;
     }
 }
 
 #wrapper {
     padding-left: 0;
+    height: 100%;
+    background-color: white;
 }
 
 #page-wrapper {
     width: 100%;
     padding: 0;
-    background-color: #fff;
+    height: 100%;
+    background-color: white;
 }
 
 .huge {
@@ -35,6 +44,8 @@ body {
 @media(min-width:768px) {
     #wrapper {
         padding-left: 225px;
+        padding-right: 0px;
+
     }
 
     #page-wrapper {
@@ -57,7 +68,7 @@ body {
     padding-top: 15px;
     padding-bottom: 15px;
     line-height: 20px;
-    color: #999;
+    background-image: url("https://cdn.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-9-full.jpg");
 }
 
 .top-nav>li>a:hover,
@@ -122,7 +133,7 @@ ul.alert-dropdown {
         border: none;
         border-radius: 0;
         overflow-y: auto;
-        background-color: #222;
+        background-image: url("https://cdn.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-9-full.jpg");
         bottom: 0;
         overflow-x: hidden;
         padding-bottom: 40px;

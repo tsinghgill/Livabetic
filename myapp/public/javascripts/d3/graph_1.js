@@ -12,7 +12,7 @@ var margin = { top: 50, right: 0, bottom: 100, left: 30 },
     times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"],
     datasets = ["carelink.csv"];
 
-var svg = d3.select("#chart").append("svg")
+var svg = d3.select("#heatmap").append("svg")
   /* Attributes and appending group */
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
@@ -105,15 +105,3 @@ var heatmapChart = function(csvFile) {
 };
 
 heatmapChart(datasets[0]);
-
-var datasetpicker = d3.select("#dataset-picker").selectAll(".dataset-button")
-  .data(datasets);
-
-datasetpicker.enter()
-  .append("input")
-  .attr("value", function(d){ return "Dataset " + d })
-  .attr("type", "button")
-  .attr("class", "dataset-button")
-  .on("click", function(d) {
-    heatmapChart(d);
-  });
