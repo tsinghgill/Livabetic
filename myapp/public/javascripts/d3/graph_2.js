@@ -1,75 +1,47 @@
 'use strict';
-var file = "carelink.csv";
 
-var MARGINS = { top: 50, right: 0, bottom: 100, left: 30 },
-  /* Initate Variables */
-  WIDTH = 960 - MARGINS.left - MARGINS.right,
-  HEIGHT = 500 - MARGINS.top - MARGINS.bottom;
 
-/* Initiate the X and Y's */
-var x = d3.time.scale()
-  .range([0, WIDTH]);
+var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
-var y = d3.scale.linear()
-  .range([HEIGHT, 0]);
+// data = [ 
+//   { date: '2016-03-17T00:00:00.000Z', daily_total: 53.4 },
+//   { date: '2016-03-18T00:00:00.000Z', daily_total: 62.7 },
+//   { date: '2016-03-19T00:00:00.000Z', daily_total: 49 },
+//   { date: '2016-03-20T00:00:00.000Z', daily_total: 59.6 },
+//   { date: '2016-03-21T00:00:00.000Z', daily_total: 55.2 },
+//   { date: '2016-03-22T00:00:00.000Z', daily_total: 64 },
+//   { date: '2016-03-23T00:00:00.000Z', daily_total: 51.4 }
+// ];
 
-var color = ['#34495e', '#3498db', '#e74c3c'];
+  $.get('/upload/dailytotalinsulin')
+  .done(function(res) {
+      var xDate = [];
+      var yTotal = [];
+      // Plotly.d3.csv('carelink.csv', function(error, data) {
 
-var xAxis = d3.svg.axis()
-  .scale(x)
-  .orient('bottom')
-  .tickSize(5)
-  .tickSubdivide(true);
+      var data = res.data
 
-var yAxis = d3.svg.axis()
-  .scale(y)
-  .orient('left')
-  .tickSize(5)
-  .tickSubdivide(true);
+      data.forEach(function(d) { //2013-10-04 22:23:00
+        xDate.push(new Date (d['date']).getDate());
+        yTotal.push(parseFloat(d['daily_total']))
+      });
 
-var line = d3.svg.line()
-  // .interpolate('basis')
-  .x(function(d) { return x(d.dayNumber) })
-  .y(function(d) { return y(d.bg) });
+      var data = [{
+        x: xDate,
+        y: yTotal,
+        type: 'bar'
+      }];
 
-/* Set up the infrastructure  */
-var svg = d3.select('body').append('svg')
-  /* Attributes and appending group */
-  .attr('width', WIDTH + MARGINS.left + MARGINS.right)
-  .attr('height', HEIGHT + MARGINS.top + MARGINS.bottom)
-  .style('background', 'pink')
-  .append('g')
-  .attr('transform', 'translate(' + MARGINS.left + ',' + MARGINS.top + ')');
+      var layout = {
+          title: 'Daily Total Insulin',
+          showlegend: false
+        };
+      Plotly.newPlot('myDiv', data, layout, {showLink: false});
+  })
+  .fail(function(err) {
+    console.log(err)
+  })
 
-var lineGraphicChart = function(csvFile) {
-  d3.csv(csvFile, function(d) {
-    // console.log(moment(d['Date'], 'DD/MM/YY').format('DD-MM-YYYY'));
-    return {
-      dayNumber: moment(d['Date'], 'DD/MM/YY').format('DD-MM-YYYY'),
-      bg: d['BG Reading (mmol/L)']
-    };
-  },
-  function(err, data) {
 
-    if (err) {
-      throw err;
-    }
-
-    x.domain(d3.extent(data, function(d) { return d.dayNumber; }))
-    y.domain([0, d3.max(data, function(d) { return d.bg; })])
-
-    /* Add the x axis */
-    svg.append('g')
-      .attr('class', 'x axis')
-      .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-      .call(xAxis);
-
-    /* Add the y axis */
-    svg.append('g')
-      .attr('class', 'y axis')
-      .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-      .call(yAxis)
-  });
-};
-
-lineGraphicChart(file);
