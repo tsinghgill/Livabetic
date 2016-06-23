@@ -10,7 +10,7 @@ d3.csv("carelink.csv", function(error, data) {
   data.forEach(function(d) { 
     // console.log(d['BWZ Carb Input (grams)'])
     // d['BWZ Carb Input (grams)'] = +d['BWZ Carb Input (grams)'];
-    debugger;
+    // debugger;
     myData[0].values = data.map(function(d){
       // debugger;
       d.Date = moment(d.Date, 'DD/MM/YY').format("MMM Do");

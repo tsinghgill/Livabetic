@@ -137,3 +137,10 @@ button:hover, button:active, button:focus {
 a {
 	color: #00B7FF;
 }
+
+div.modebar.modebar--hover {
+	/*position: absolute !absolute;*/
+	/*display: inline !important;*/
+	width: 17px !important;
+	height: 17px !important;
+} 
