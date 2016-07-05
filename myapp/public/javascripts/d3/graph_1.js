@@ -21,7 +21,7 @@ $.get('/upload/bgheatmap')
 .done(function(res) {
 
 
-var margin = { top: 50, right: 0, bottom: 100, left: 30 },
+var margin = { top: 50, right: 0, bottom: 0, left: 30 },
     /* Initate Variables */
     width = 900 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom,
